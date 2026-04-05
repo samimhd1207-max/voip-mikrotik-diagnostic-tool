@@ -1,0 +1,382 @@
+[
+  {
+    "id": "24b2b107-8565-42a6-808e-7dedb1f09cba",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "degraded",
+    "startedAt": "2026-04-05T21:57:35.149Z",
+    "finishedAt": "2026-04-05T21:57:37.176Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "8.8.8.8",
+        "latencyMs": null,
+        "startedAt": "2026-04-05T21:57:35.149Z",
+        "finishedAt": "2026-04-05T21:57:35.170Z",
+        "rawOutput": "Acc�s refus�. L'option -c requiert des privil�ges d'administration."
+      },
+      "dns": {
+        "ok": false,
+        "target": "8.8.8.8",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": {
+          "ipv4": "queryA ECONNREFUSED 8.8.8.8",
+          "ipv6": "queryAaaa ECONNREFUSED 8.8.8.8"
+        },
+        "startedAt": "2026-04-05T21:57:35.160Z",
+        "finishedAt": "2026-04-05T21:57:35.166Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 2012,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": true,
+            "responseTimeMs": 33,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2013,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-05T21:57:35.162Z",
+        "finishedAt": "2026-04-05T21:57:37.176Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": false
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "b1f5fb7a-f8e9-42a2-9210-88781109e3dd",
+    "target": "10.255.255.1",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "degraded",
+    "startedAt": "2026-04-05T22:42:18.892Z",
+    "finishedAt": "2026-04-05T22:42:20.915Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "10.255.255.1",
+        "latencyMs": null,
+        "startedAt": "2026-04-05T22:42:18.892Z",
+        "finishedAt": "2026-04-05T22:42:18.909Z",
+        "rawOutput": "Acc�s refus�. L'option -c requiert des privil�ges d'administration."
+      },
+      "dns": {
+        "ok": false,
+        "target": "10.255.255.1",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": {
+          "ipv4": "queryA ECONNREFUSED 10.255.255.1",
+          "ipv6": "queryAaaa ECONNREFUSED 10.255.255.1"
+        },
+        "startedAt": "2026-04-05T22:42:18.900Z",
+        "finishedAt": "2026-04-05T22:42:18.905Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "10.255.255.1",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 2014,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 2014,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2013,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-05T22:42:18.901Z",
+        "finishedAt": "2026-04-05T22:42:20.915Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": false
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "6f34538a-fae8-4fac-b992-ff188189dcf0",
+    "target": "192.168.100.1",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "degraded",
+    "startedAt": "2026-04-05T22:43:53.164Z",
+    "finishedAt": "2026-04-05T22:43:55.196Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "latencyMs": null,
+        "startedAt": "2026-04-05T22:43:53.164Z",
+        "finishedAt": "2026-04-05T22:43:53.191Z",
+        "rawOutput": "Acc�s refus�. L'option -c requiert des privil�ges d'administration."
+      },
+      "dns": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": {
+          "ipv4": "queryA EDESTRUCTION 192.168.100.1",
+          "ipv6": "queryAaaa ECONNREFUSED 192.168.100.1"
+        },
+        "startedAt": "2026-04-05T22:43:53.171Z",
+        "finishedAt": "2026-04-05T22:43:53.192Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "ports": [
+          {
+            "port": 80,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-05T22:43:53.190Z",
+        "finishedAt": "2026-04-05T22:43:55.196Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": false
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "6d13abf5-8399-4bec-9413-7bc42b16b3a4",
+    "target": "192.168.100.3",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "degraded",
+    "startedAt": "2026-04-05T22:44:24.301Z",
+    "finishedAt": "2026-04-05T22:44:26.326Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "192.168.100.3",
+        "latencyMs": null,
+        "startedAt": "2026-04-05T22:44:24.301Z",
+        "finishedAt": "2026-04-05T22:44:24.322Z",
+        "rawOutput": "Acc�s refus�. L'option -c requiert des privil�ges d'administration."
+      },
+      "dns": {
+        "ok": false,
+        "target": "192.168.100.3",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": {
+          "ipv4": "queryA EDESTRUCTION 192.168.100.3",
+          "ipv6": "queryAaaa ECONNREFUSED 192.168.100.3"
+        },
+        "startedAt": "2026-04-05T22:44:24.306Z",
+        "finishedAt": "2026-04-05T22:44:24.322Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "192.168.100.3",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 2005,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-05T22:44:24.320Z",
+        "finishedAt": "2026-04-05T22:44:26.326Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": false
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "088124e7-f202-46b3-8735-6746a7b5b6da",
+    "target": "192.168.100.1",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "degraded",
+    "startedAt": "2026-04-05T22:44:36.786Z",
+    "finishedAt": "2026-04-05T22:44:38.808Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "latencyMs": null,
+        "startedAt": "2026-04-05T22:44:36.786Z",
+        "finishedAt": "2026-04-05T22:44:36.803Z",
+        "rawOutput": "Acc�s refus�. L'option -c requiert des privil�ges d'administration."
+      },
+      "dns": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": {
+          "ipv4": "queryA EDESTRUCTION 192.168.100.1",
+          "ipv6": "queryAaaa ECONNREFUSED 192.168.100.1"
+        },
+        "startedAt": "2026-04-05T22:44:36.789Z",
+        "finishedAt": "2026-04-05T22:44:36.804Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "192.168.100.1",
+        "ports": [
+          {
+            "port": 80,
+            "open": true,
+            "responseTimeMs": 2,
+            "error": null
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2006,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-05T22:44:36.802Z",
+        "finishedAt": "2026-04-05T22:44:38.808Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": false
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  }
+]
