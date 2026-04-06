@@ -1,6 +1,55 @@
 import { useState } from 'react';
 import './App.css';
 
+const deriveFallbackAnalysisFromResults = (result) => {
+  const pingOk = result?.results?.ping?.ok;
+  const dns = result?.results?.dns;
+  const ports = result?.results?.ports?.ports || [];
+
+  const portState = new Map(ports.map((item) => [item.port, item.open]));
+  const port5060Closed = portState.get(5060) === false;
+
+  if (pingOk === false) {
+    return {
+      probableCause: 'Device unreachable from WAN checks (host down, link issue, or ICMP blocked).',
+      recommendedAction: 'Check WAN connectivity, CPE power, and ICMP policy on firewall/router.',
+      mikrotikChecks: [
+        'Inspect WAN interface status in /interface print',
+        'Check default route in /ip route print where dst-address=0.0.0.0/0',
+      ],
+      routerOsCommand: '/interface print; /ip route print where dst-address=0.0.0.0/0',
+    };
+  }
+
+  if (dns && dns.skipped !== true && dns.ok === false) {
+    return {
+      probableCause: 'DNS resolution failed for this hostname.',
+      recommendedAction: 'Check DNS server settings and resolver reachability.',
+      mikrotikChecks: ['Review /ip dns print and verify upstream DNS reachability'],
+      routerOsCommand: '/ip dns print; /ping 8.8.8.8 count=4',
+    };
+  }
+
+  if (pingOk === true && port5060Closed) {
+    return {
+      probableCause: 'SIP signaling port 5060 appears blocked.',
+      recommendedAction: 'Allow/open port 5060 and verify NAT + firewall filter rules.',
+      mikrotikChecks: [
+        'Check firewall filter rules for dst-port=5060',
+        'Check NAT rules for SIP service',
+      ],
+      routerOsCommand: '/ip firewall filter print; /ip firewall nat print',
+    };
+  }
+
+  return {
+    probableCause: 'Network checks completed but no single dominant root cause was isolated from this probe point.',
+    recommendedAction: 'Collect more data (traceroute, ISP path, PBX logs) and re-run diagnostics.',
+    mikrotikChecks: [],
+    routerOsCommand: 'N/A',
+  };
+};
+
 function App() {
   const [target, setTarget] = useState('');
   const [loading, setLoading] = useState(false);
@@ -49,6 +98,17 @@ function App() {
   };
 
   const analysis = result?.analysis;
+  const fallbackAnalysis = deriveFallbackAnalysisFromResults(result);
+
+  // Backward/forward compatibility across analysis payload versions.
+  const probableCause =
+    analysis?.primaryFinding?.probableCause || analysis?.cause || analysis?.explanation || analysis?.issue || fallbackAnalysis.probableCause;
+  const recommendedAction =
+    analysis?.primaryFinding?.recommendedAction || analysis?.solution || fallbackAnalysis.recommendedAction;
+  const mikrotikChecks =
+    analysis?.primaryFinding?.mikrotikChecks || analysis?.suggestedChecks || analysis?.mikrotikChecks || fallbackAnalysis.mikrotikChecks;
+  const routerOsCommand =
+    analysis?.primaryFinding?.routerOsCommand || analysis?.routerOsCommand || fallbackAnalysis.routerOsCommand;
 
   return (
     <main className="page">
@@ -132,20 +192,27 @@ function App() {
             </table>
 
             <h3>Probable cause</h3>
-            <p>{analysis?.primaryFinding?.probableCause || 'No probable cause identified.'}</p>
+            <p>{probableCause}</p>
 
             <h3>Recommended next action</h3>
-            <p>{analysis?.primaryFinding?.recommendedAction || 'No recommendation available.'}</p>
+            <p>{recommendedAction}</p>
+
+            {analysis?.context && (
+              <>
+                <h3>Realistic context</h3>
+                <p>{analysis.context}</p>
+              </>
+            )}
 
             <h3>Suggested MikroTik-side checks</h3>
             <ul>
-              {(analysis?.primaryFinding?.mikrotikChecks || []).map((item) => (
+              {mikrotikChecks.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
 
             <h3>RouterOS command suggestion</h3>
-            <code>{analysis?.primaryFinding?.routerOsCommand || 'N/A'}</code>
+            <code>{routerOsCommand}</code>
           </div>
         )}
       </section>

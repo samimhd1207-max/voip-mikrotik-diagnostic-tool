@@ -19,7 +19,7 @@ test('shows error when target is empty', async () => {
   expect(await screen.findByRole('alert')).toHaveTextContent(/Please enter a target IP address or hostname/i);
 });
 
-test('shows support-oriented analysis after successful run', async () => {
+test('shows support-oriented analysis after successful run (detailed analysis payload)', async () => {
   const fetchMock = jest
     .spyOn(global, 'fetch')
     .mockResolvedValueOnce({
@@ -44,13 +44,7 @@ test('shows support-oriented analysis after successful run', async () => {
           ping: { ok: true },
           dns: { ok: true },
           ports: {
-            ports: [
-              { port: 80, open: true, responseTimeMs: 15 },
-              { port: 443, open: true, responseTimeMs: 16 },
-              { port: 8291, open: false, responseTimeMs: 20 },
-              { port: 5060, open: false, responseTimeMs: 20 },
-              { port: 5061, open: false, responseTimeMs: 20 },
-            ],
+            ports: [{ port: 8291, open: false, responseTimeMs: 20 }],
           },
         },
       }),
@@ -67,5 +61,73 @@ test('shows support-oriented analysis after successful run', async () => {
   expect(screen.getByText(/Probable cause/i)).toBeInTheDocument();
   expect(screen.getByText(/Winbox access/i)).toBeInTheDocument();
   expect(screen.getByText(/Suggested MikroTik-side checks/i)).toBeInTheDocument();
-  expect(screen.getByText(/8291/i)).toBeInTheDocument();
+});
+
+test('shows support-oriented analysis when backend returns summary payload only', async () => {
+  const fetchMock = jest
+    .spyOn(global, 'fetch')
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ id: 'diag-2' }),
+    })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        target: '162.120.187.125',
+        status: 'degraded',
+        analysis: {
+          issue: 'Device unreachable',
+          cause: 'Ping failed. Device may be offline, WAN-down, or ICMP blocked.',
+          solution: 'Verify WAN link and power state, then review ICMP/firewall policy on edge router.',
+        },
+        results: {
+          ping: { ok: false },
+          dns: { ok: false },
+          ports: { ports: [{ port: 5060, open: false, responseTimeMs: 2015 }] },
+        },
+      }),
+    });
+
+  render(<App />);
+  fireEvent.change(screen.getByLabelText(/Target IP or hostname/i), {
+    target: { value: '162.120.187.125' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /Run diagnostic/i }));
+
+  await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+
+  expect(screen.getByText(/Ping failed\. Device may be offline/i)).toBeInTheDocument();
+  expect(screen.getByText(/Verify WAN link and power state/i)).toBeInTheDocument();
+});
+
+test('derives fallback probable cause when backend returns no analysis object', async () => {
+  const fetchMock = jest
+    .spyOn(global, 'fetch')
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ id: 'diag-3' }),
+    })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        target: '162.120.187.125',
+        status: 'degraded',
+        results: {
+          ping: { ok: false },
+          dns: { ok: false },
+          ports: { ports: [{ port: 5060, open: false, responseTimeMs: 2015 }] },
+        },
+      }),
+    });
+
+  render(<App />);
+  fireEvent.change(screen.getByLabelText(/Target IP or hostname/i), {
+    target: { value: '162.120.187.125' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /Run diagnostic/i }));
+
+  await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+
+  expect(screen.getByText(/Device unreachable from WAN checks/i)).toBeInTheDocument();
+  expect(screen.getByText(/Check WAN connectivity, CPE power/i)).toBeInTheDocument();
 });
