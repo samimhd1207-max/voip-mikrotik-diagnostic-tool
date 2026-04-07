@@ -1,6 +1,8 @@
 const isClosed = (portsMap, port) => portsMap.get(port)?.open === false;
 const isOpen = (portsMap, port) => portsMap.get(port)?.open === true;
 
+const looksVoipRelatedTarget = (target) => /\b(sip|voip|pbx|asterisk|trunk|softswitch)\b/i.test(target);
+
 const buildIssueSummary = (rule) => {
   if (rule === 'icmp_likely_filtered') {
     return {
@@ -52,6 +54,17 @@ const buildIssueSummary = (rule) => {
     };
   }
 
+  if (rule === 'sip_port_5060_blocked_confirmed_mikrotik') {
+    return {
+      issue: 'SIP signaling blocked (confirmed by MikroTik firewall)',
+      explanation: 'Port 5060 is closed and MikroTik firewall contains a matching block rule.',
+      context: 'This is a high-confidence confirmation because both external test and router policy align.',
+      cause: 'MikroTik firewall rule blocks SIP signaling on 5060.',
+      solution: 'Adjust firewall policy for trusted SIP flows and validate NAT requirements.',
+      suggestedChecks: ['Review the matching block rule and chain/order', 'Validate dst-nat and filter alignment for SIP traffic'],
+    };
+  }
+
   if (rule === 'sip_port_5060_blocked') {
     return {
       issue: 'SIP signaling appears blocked',
@@ -60,6 +73,16 @@ const buildIssueSummary = (rule) => {
       cause: 'Firewall/NAT policy blocking SIP port 5060.',
       solution: 'Allow/open port 5060 as required by architecture and confirm SIP NAT/filter rules.',
       suggestedChecks: ['Review filter rules for dst-port=5060', 'Review NAT mapping for SIP service'],
+    };
+  }
+  if (rule === 'sip_port_5060_closed_but_optional') {
+    return {
+      issue: 'Port 5060 closed (likely normal)',
+      explanation: 'Port 5060 is closed, which is common when the target is not a VoIP/SIP endpoint.',
+      context: 'Closed SIP on generic hosts (e.g., web/public services) is usually expected and not a VoIP incident by itself.',
+      cause: 'No SIP service expected on this target.',
+      solution: 'Only investigate SIP exposure if this host is meant to run VoIP signaling.',
+      suggestedChecks: ['Confirm whether this host should provide SIP service before opening 5060.'],
     };
   }
 
@@ -95,7 +118,7 @@ const buildIssueSummary = (rule) => {
   };
 };
 
-const buildAnalysis = ({ target, ping, dns, portCheck, dnsWasRequired }) => {
+const buildAnalysis = ({ target, ping, dns, portCheck, dnsWasRequired, expectsSipService = false, mikrotikSnapshot = null }) => {
   const findings = [];
   const portsMap = new Map(portCheck.ports.map((item) => [item.port, item]));
   const allPortsClosed = portCheck.ports.length > 0 && portCheck.ports.every((port) => !port.open);
@@ -146,13 +169,37 @@ const buildAnalysis = ({ target, ping, dns, portCheck, dnsWasRequired }) => {
   }
 
   if (ping.ok && isClosed(portsMap, 5060)) {
-    findings.push({
-      rule: 'sip_port_5060_blocked',
-      probableCause: 'Port 5060 closed while host remains reachable.',
-      recommendedAction: 'Review SIP firewall/NAT exposure policy.',
-      mikrotikChecks: ['Check filter rules for dst-port=5060', 'Check NAT entries for SIP service'],
-      routerOsCommand: '/ip firewall filter print; /ip firewall nat print',
-    });
+    const sipExpected = expectsSipService || looksVoipRelatedTarget(target);
+
+    if (sipExpected) {
+      const mikrotikFirewallBlocked = Boolean(mikrotikSnapshot?.analysis?.firewall?.blocked);
+
+      findings.push({
+        rule: mikrotikFirewallBlocked ? 'sip_port_5060_blocked_confirmed_mikrotik' : 'sip_port_5060_blocked',
+        probableCause: mikrotikFirewallBlocked
+          ? 'Port 5060 closed and MikroTik firewall has an explicit blocking rule.'
+          : 'Port 5060 closed while host remains reachable and SIP service is expected.',
+        recommendedAction: mikrotikFirewallBlocked
+          ? 'Adjust or reorder the blocking firewall rule for SIP flows.'
+          : 'Review SIP firewall/NAT exposure policy.',
+        mikrotikChecks: [
+          'Check filter rules for dst-port=5060',
+          'Check NAT entries for SIP service',
+          ...(mikrotikFirewallBlocked && mikrotikSnapshot?.analysis?.firewall?.matchingRule
+            ? [`Matched firewall rule: ${mikrotikSnapshot.analysis.firewall.matchingRule}`]
+            : []),
+        ],
+        routerOsCommand: '/ip firewall filter print; /ip firewall nat print',
+      });
+    } else {
+      findings.push({
+        rule: 'sip_port_5060_closed_but_optional',
+        probableCause: 'Port 5060 is closed, which is normal when no VoIP service is expected on this target.',
+        recommendedAction: 'No SIP action required unless this host should expose SIP.',
+        mikrotikChecks: ['If SIP is expected, confirm service binding and firewall policy for port 5060.'],
+        routerOsCommand: '/ip firewall filter print where dst-port=5060',
+      });
+    }
   }
 
   if (isClosed(portsMap, 8291) && (isOpen(portsMap, 80) || isOpen(portsMap, 443))) {

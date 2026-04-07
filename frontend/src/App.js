@@ -52,6 +52,11 @@ const deriveFallbackAnalysisFromResults = (result) => {
 
 function App() {
   const [target, setTarget] = useState('');
+  const [useMikrotikAccess, setUseMikrotikAccess] = useState(false);
+  const [mikrotikHost, setMikrotikHost] = useState('');
+  const [mikrotikPort, setMikrotikPort] = useState('22');
+  const [mikrotikUsername, setMikrotikUsername] = useState('');
+  const [mikrotikPassword, setMikrotikPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
@@ -64,6 +69,25 @@ function App() {
       return;
     }
 
+    let payload = { target: trimmedTarget };
+    if (useMikrotikAccess) {
+      if (!mikrotikHost.trim() || !mikrotikUsername.trim() || !mikrotikPassword) {
+        setError('Please enter MikroTik host, username, and password.');
+        setResult(null);
+        return;
+      }
+
+      payload = {
+        ...payload,
+        mikrotik: {
+          host: mikrotikHost.trim(),
+          username: mikrotikUsername.trim(),
+          password: mikrotikPassword,
+          port: Number(mikrotikPort) || 22,
+        },
+      };
+    }
+
     setLoading(true);
     setError('');
     setResult(null);
@@ -74,7 +98,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ target: trimmedTarget }),
+        body: JSON.stringify(payload),
       });
 
       if (!startResponse.ok) {
@@ -127,6 +151,56 @@ function App() {
             value={target}
             onChange={(event) => setTarget(event.target.value)}
           />
+          <label className="checkbox-row" htmlFor="use-mikrotik-access">
+            <input
+              id="use-mikrotik-access"
+              type="checkbox"
+              checked={useMikrotikAccess}
+              onChange={(event) => setUseMikrotikAccess(event.target.checked)}
+            />
+            <span>Connect to MikroTik via SSH (username + password)</span>
+          </label>
+
+          {useMikrotikAccess && (
+            <div className="mikrotik-credentials">
+              <label htmlFor="mikrotik-host">MikroTik host</label>
+              <input
+                id="mikrotik-host"
+                type="text"
+                placeholder="203.0.113.10"
+                value={mikrotikHost}
+                onChange={(event) => setMikrotikHost(event.target.value)}
+              />
+
+              <label htmlFor="mikrotik-port">MikroTik SSH port</label>
+              <input
+                id="mikrotik-port"
+                type="number"
+                min="1"
+                max="65535"
+                value={mikrotikPort}
+                onChange={(event) => setMikrotikPort(event.target.value)}
+              />
+
+              <label htmlFor="mikrotik-username">MikroTik username</label>
+              <input
+                id="mikrotik-username"
+                type="text"
+                placeholder="admin"
+                value={mikrotikUsername}
+                onChange={(event) => setMikrotikUsername(event.target.value)}
+              />
+
+              <label htmlFor="mikrotik-password">MikroTik password</label>
+              <input
+                id="mikrotik-password"
+                type="password"
+                value={mikrotikPassword}
+                onChange={(event) => setMikrotikPassword(event.target.value)}
+              />
+            </div>
+          )}
+
           <button type="button" onClick={runDiagnostic} disabled={loading}>
             {loading ? 'Running diagnostic…' : 'Run diagnostic'}
           </button>

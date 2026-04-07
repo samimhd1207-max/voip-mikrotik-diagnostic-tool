@@ -2194,5 +2194,1950 @@
         "ok": false
       }
     ]
+  },
+  {
+    "id": "583601e0-42ff-4498-8be4-795b9008f271",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "attention_required",
+    "startedAt": "2026-04-07T07:02:38.526Z",
+    "finishedAt": "2026-04-07T07:02:41.570Z",
+    "results": {
+      "ping": {
+        "ok": true,
+        "target": "8.8.8.8",
+        "latencyMs": 16,
+        "startedAt": "2026-04-07T07:02:38.526Z",
+        "finishedAt": "2026-04-07T07:02:38.594Z",
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms"
+      },
+      "dns": {
+        "ok": true,
+        "skipped": true,
+        "reason": "DNS not applicable for direct IP target.",
+        "target": "8.8.8.8",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": null,
+        "startedAt": "2026-04-07T07:02:38.554Z",
+        "finishedAt": "2026-04-07T07:02:38.554Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 3015,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": true,
+            "responseTimeMs": 19,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "open": false,
+            "responseTimeMs": 3015,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 3015,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-07T07:02:38.552Z",
+        "finishedAt": "2026-04-07T07:02:41.568Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "reachable",
+        "ok": true
+      },
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "3c3cbf81-2e4f-4c61-adfa-75eeb65d0d5b",
+    "target": "100.64.133.14",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "attention_required",
+    "startedAt": "2026-04-07T07:14:48.235Z",
+    "finishedAt": "2026-04-07T07:14:51.272Z",
+    "results": {
+      "ping": {
+        "ok": false,
+        "target": "100.64.133.14",
+        "latencyMs": null,
+        "startedAt": "2026-04-07T07:14:48.235Z",
+        "finishedAt": "2026-04-07T07:14:50.805Z",
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.64.133.14 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 100.64.133.14:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 -w 3000 100.64.133.14"
+      },
+      "dns": {
+        "ok": true,
+        "skipped": true,
+        "reason": "DNS not applicable for direct IP target.",
+        "target": "100.64.133.14",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": null,
+        "startedAt": "2026-04-07T07:14:48.258Z",
+        "finishedAt": "2026-04-07T07:14:48.258Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "100.64.133.14",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 3013,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 3013,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "open": false,
+            "responseTimeMs": 3013,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 3013,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "open": false,
+            "responseTimeMs": 3013,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-07T07:14:48.258Z",
+        "finishedAt": "2026-04-07T07:14:51.271Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "reachable",
+        "ok": false
+      },
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "b1f81ab3-c980-42dd-85cd-8157ab6b126a",
+    "target": "196.179.224.99",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "attention_required",
+    "startedAt": "2026-04-07T07:16:02.004Z",
+    "finishedAt": "2026-04-07T07:16:04.105Z",
+    "results": {
+      "ping": {
+        "ok": true,
+        "target": "196.179.224.99",
+        "latencyMs": 1,
+        "startedAt": "2026-04-07T07:16:02.004Z",
+        "finishedAt": "2026-04-07T07:16:02.062Z",
+        "rawOutput": "Envoi d'une requ�te 'Ping'  196.179.224.99 avec 32 octets de donn�es�:\r\nR�ponse de 196.179.224.99�: octets=32 temps=1 ms TTL=255\r\n\r\nStatistiques Ping pour 196.179.224.99:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms"
+      },
+      "dns": {
+        "ok": true,
+        "skipped": true,
+        "reason": "DNS not applicable for direct IP target.",
+        "target": "196.179.224.99",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": null,
+        "startedAt": "2026-04-07T07:16:02.030Z",
+        "finishedAt": "2026-04-07T07:16:02.030Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "196.179.224.99",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 2042,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "open": false,
+            "responseTimeMs": 2074,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "open": false,
+            "responseTimeMs": 2073,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 2072,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "open": false,
+            "responseTimeMs": 2074,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "startedAt": "2026-04-07T07:16:02.030Z",
+        "finishedAt": "2026-04-07T07:16:04.105Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "reachable",
+        "ok": true
+      },
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "bd7c58dd-a352-4eb5-8cee-971eaa877c96",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "attention_required",
+    "startedAt": "2026-04-07T07:16:52.264Z",
+    "finishedAt": "2026-04-07T07:16:55.334Z",
+    "results": {
+      "ping": {
+        "ok": true,
+        "target": "google.com",
+        "latencyMs": 26,
+        "startedAt": "2026-04-07T07:16:52.264Z",
+        "finishedAt": "2026-04-07T07:16:52.349Z",
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.20.46] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.20.46�: octets=32 temps=26 ms TTL=113\r\n\r\nStatistiques Ping pour 172.217.20.46:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms"
+      },
+      "dns": {
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "records": {
+          "ipv4": [
+            "172.217.20.46"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:80f::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "startedAt": "2026-04-07T07:16:52.285Z",
+        "finishedAt": "2026-04-07T07:16:52.324Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "open": true,
+            "responseTimeMs": 62,
+            "error": null
+          },
+          {
+            "port": 443,
+            "open": true,
+            "responseTimeMs": 61,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "open": false,
+            "responseTimeMs": 3049,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 3049,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "open": false,
+            "responseTimeMs": 3049,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-07T07:16:52.284Z",
+        "finishedAt": "2026-04-07T07:16:55.334Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "reachable",
+        "ok": true
+      },
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "53abffa6-254b-4d1a-a240-92467b05e02e",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "attention_required",
+    "startedAt": "2026-04-07T07:17:19.740Z",
+    "finishedAt": "2026-04-07T07:17:22.765Z",
+    "results": {
+      "ping": {
+        "ok": true,
+        "target": "8.8.8.8",
+        "latencyMs": 15,
+        "startedAt": "2026-04-07T07:17:19.740Z",
+        "finishedAt": "2026-04-07T07:17:19.802Z",
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=15 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 15ms, Maximum = 15ms, Moyenne = 15ms"
+      },
+      "dns": {
+        "ok": true,
+        "skipped": true,
+        "reason": "DNS not applicable for direct IP target.",
+        "target": "8.8.8.8",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "errors": null,
+        "startedAt": "2026-04-07T07:17:19.758Z",
+        "finishedAt": "2026-04-07T07:17:19.758Z"
+      },
+      "ports": {
+        "ok": false,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "open": true,
+            "responseTimeMs": 17,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "open": false,
+            "responseTimeMs": 3007,
+            "error": "timeout"
+          }
+        ],
+        "startedAt": "2026-04-07T07:17:19.758Z",
+        "finishedAt": "2026-04-07T07:17:22.765Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "reachable",
+        "ok": true
+      },
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ]
+  },
+  {
+    "id": "640455f4-40f4-475b-9ae3-629296771fee",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "healthy",
+    "startedAt": "2026-04-07T07:55:06.301Z",
+    "finishedAt": "2026-04-07T07:55:09.357Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T07:55:06.301Z",
+        "finishedAt": "2026-04-07T07:55:06.407Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T07:55:06.334Z",
+        "finishedAt": "2026-04-07T07:55:06.334Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3019,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 19,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3019,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3019,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3018,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T07:55:06.334Z",
+        "finishedAt": "2026-04-07T07:55:09.355Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ]
+  },
+  {
+    "id": "47d884c8-9dd6-40e9-90cc-5fab7de07cdf",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "healthy",
+    "startedAt": "2026-04-07T08:01:17.923Z",
+    "finishedAt": "2026-04-07T08:01:20.958Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T08:01:17.923Z",
+        "finishedAt": "2026-04-07T08:01:18.035Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T08:01:17.954Z",
+        "finishedAt": "2026-04-07T08:01:17.954Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 18,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T08:01:17.954Z",
+        "finishedAt": "2026-04-07T08:01:20.958Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ]
+  },
+  {
+    "id": "41173965-6714-4a4b-978d-652087903340",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "healthy",
+    "startedAt": "2026-04-07T08:17:06.566Z",
+    "finishedAt": "2026-04-07T08:17:09.615Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T08:17:06.566Z",
+        "finishedAt": "2026-04-07T08:17:06.643Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T08:17:06.585Z",
+        "finishedAt": "2026-04-07T08:17:06.585Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3028,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 16,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3028,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3028,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3028,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T08:17:06.585Z",
+        "finishedAt": "2026-04-07T08:17:09.614Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ]
+  },
+  {
+    "id": "f237d2a9-3313-48d4-9170-f43c2689ce41",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      5060
+    ],
+    "status": "healthy",
+    "startedAt": "2026-04-07T08:17:48.908Z",
+    "finishedAt": "2026-04-07T08:17:51.974Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 26,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.20.46] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.20.46�: octets=32 temps=26 ms TTL=113\r\n\r\nStatistiques Ping pour 172.217.20.46:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms",
+        "ok": true,
+        "latencyMs": 26,
+        "target": "google.com",
+        "startedAt": "2026-04-07T08:17:48.908Z",
+        "finishedAt": "2026-04-07T08:17:49.016Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "172.217.20.46"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:80f::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=172.217.20.46 AAAA=2a00:1450:4007:80f::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-07T08:17:48.932Z",
+        "finishedAt": "2026-04-07T08:17:48.969Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 63,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 63,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3039,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3038,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3039,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T08:17:48.934Z",
+        "finishedAt": "2026-04-07T08:17:51.974Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ]
+  },
+  {
+    "id": "ad052667-90a7-4bbe-a1f0-a98b2ba36d96",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T10:04:48.066Z",
+    "finishedAt": "2026-04-07T10:04:51.101Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T10:04:48.066Z",
+        "finishedAt": "2026-04-07T10:04:48.158Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T10:04:48.092Z",
+        "finishedAt": "2026-04-07T10:04:48.092Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3005,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 19,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3005,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:04:48.092Z",
+        "finishedAt": "2026-04-07T10:04:51.099Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        },
+        {
+          "rule": "winbox_blocked",
+          "probableCause": "Winbox blocked while HTTP/HTTPS still reachable.",
+          "recommendedAction": "Verify management ACL/allowlist for remote support.",
+          "mikrotikChecks": [
+            "Inspect input chain rules for tcp/8291"
+          ],
+          "routerOsCommand": "/ip firewall filter print where chain=input"
+        }
+      ],
+      "target": "8.8.8.8"
+    }
+  },
+  {
+    "id": "0a88cd1b-151f-417a-8c97-3ef8818c060d",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T10:05:19.010Z",
+    "finishedAt": "2026-04-07T10:05:22.085Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 26,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.20.46] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.20.46�: octets=32 temps=26 ms TTL=114\r\n\r\nStatistiques Ping pour 172.217.20.46:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms",
+        "ok": true,
+        "latencyMs": 26,
+        "target": "google.com",
+        "startedAt": "2026-04-07T10:05:19.010Z",
+        "finishedAt": "2026-04-07T10:05:19.117Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "172.217.20.46"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:80f::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=172.217.20.46 AAAA=2a00:1450:4007:80f::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-07T10:05:19.041Z",
+        "finishedAt": "2026-04-07T10:05:19.082Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 62,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 61,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3037,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3037,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3036,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:05:19.045Z",
+        "finishedAt": "2026-04-07T10:05:22.084Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Port 5060 closed (likely normal)",
+      "explanation": "Port 5060 is closed, which is common when the target is not a VoIP/SIP endpoint.",
+      "context": "Closed SIP on generic hosts (e.g., web/public services) is usually expected and not a VoIP incident by itself.",
+      "cause": "No SIP service expected on this target.",
+      "solution": "Only investigate SIP exposure if this host is meant to run VoIP signaling.",
+      "suggestedChecks": [
+        "Confirm whether this host should provide SIP service before opening 5060."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "sip_port_5060_closed_but_optional",
+        "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+        "recommendedAction": "No SIP action required unless this host should expose SIP.",
+        "mikrotikChecks": [
+          "If SIP is expected, confirm service binding and firewall policy for port 5060."
+        ],
+        "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+      },
+      "findings": [
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        },
+        {
+          "rule": "winbox_blocked",
+          "probableCause": "Winbox blocked while HTTP/HTTPS still reachable.",
+          "recommendedAction": "Verify management ACL/allowlist for remote support.",
+          "mikrotikChecks": [
+            "Inspect input chain rules for tcp/8291"
+          ],
+          "routerOsCommand": "/ip firewall filter print where chain=input"
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "1e827522-6995-45be-a56f-53bd6b1f52ac",
+    "target": "100.67.254.13",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T10:21:38.369Z",
+    "finishedAt": "2026-04-07T10:21:42.313Z",
+    "results": {
+      "ping": {
+        "success": false,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 100.67.254.13",
+        "ok": false,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:21:38.369Z",
+        "finishedAt": "2026-04-07T10:21:42.313Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:21:38.399Z",
+        "finishedAt": "2026-04-07T10:21:38.399Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3025,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3025,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3025,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3025,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3025,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:21:38.399Z",
+        "finishedAt": "2026-04-07T10:21:41.425Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "ICMP likely filtered on public IP",
+      "explanation": "Ping failed and all tested ports are closed, which is common when public-facing firewalls drop ICMP and unsolicited inbound traffic.",
+      "context": "This does not automatically mean outage. Many providers and edge firewalls intentionally block ping on WAN addresses.",
+      "cause": "ICMP filtering and closed inbound policy on the public edge.",
+      "solution": "Validate reachability using allowed management channels (VPN, Winbox allowlist, HTTPS) and confirm firewall policy intent.",
+      "suggestedChecks": [
+        "Verify whether ICMP is intentionally blocked in input chain",
+        "Check if inbound policy is default-drop for non-whitelisted sources"
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "icmp_likely_filtered",
+        "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+        "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+        "mikrotikChecks": [
+          "Check input chain policy in /ip firewall filter print",
+          "Validate support source IP allowlist for management"
+        ],
+        "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+      },
+      "findings": [
+        {
+          "rule": "icmp_likely_filtered",
+          "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+          "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+          "mikrotikChecks": [
+            "Check input chain policy in /ip firewall filter print",
+            "Validate support source IP allowlist for management"
+          ],
+          "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+        },
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "100.67.254.13"
+    }
+  },
+  {
+    "id": "b4d7167b-5c23-4773-b6b6-e828ad9c0da1",
+    "target": "100.67.254.13",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T10:47:45.082Z",
+    "finishedAt": "2026-04-07T10:47:48.114Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nR�ponse de 196.179.224.98�: Impossible de joindre le r�seau de destination.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),",
+        "ok": true,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:47:45.082Z",
+        "finishedAt": "2026-04-07T10:47:45.173Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:47:45.109Z",
+        "finishedAt": "2026-04-07T10:47:45.109Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:47:45.109Z",
+        "finishedAt": "2026-04-07T10:47:48.113Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "100.67.254.13"
+    }
+  },
+  {
+    "id": "410d1707-e6a2-459d-82a1-4f966c709e72",
+    "target": "100.67.254.13",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T10:48:58.007Z",
+    "finishedAt": "2026-04-07T10:49:01.812Z",
+    "results": {
+      "ping": {
+        "success": false,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 100.67.254.13",
+        "ok": false,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:48:58.007Z",
+        "finishedAt": "2026-04-07T10:49:01.812Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:48:58.037Z",
+        "finishedAt": "2026-04-07T10:48:58.037Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3015,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:48:58.037Z",
+        "finishedAt": "2026-04-07T10:49:01.052Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "ICMP likely filtered on public IP",
+      "explanation": "Ping failed and all tested ports are closed, which is common when public-facing firewalls drop ICMP and unsolicited inbound traffic.",
+      "context": "This does not automatically mean outage. Many providers and edge firewalls intentionally block ping on WAN addresses.",
+      "cause": "ICMP filtering and closed inbound policy on the public edge.",
+      "solution": "Validate reachability using allowed management channels (VPN, Winbox allowlist, HTTPS) and confirm firewall policy intent.",
+      "suggestedChecks": [
+        "Verify whether ICMP is intentionally blocked in input chain",
+        "Check if inbound policy is default-drop for non-whitelisted sources"
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "icmp_likely_filtered",
+        "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+        "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+        "mikrotikChecks": [
+          "Check input chain policy in /ip firewall filter print",
+          "Validate support source IP allowlist for management"
+        ],
+        "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+      },
+      "findings": [
+        {
+          "rule": "icmp_likely_filtered",
+          "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+          "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+          "mikrotikChecks": [
+            "Check input chain policy in /ip firewall filter print",
+            "Validate support source IP allowlist for management"
+          ],
+          "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+        },
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "100.67.254.13"
+    }
+  },
+  {
+    "id": "d5f96659-6da2-4109-bdef-ef40a6932242",
+    "target": "100.67.254.13",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T10:55:25.697Z",
+    "finishedAt": "2026-04-07T10:55:29.316Z",
+    "results": {
+      "ping": {
+        "success": false,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 100.67.254.13",
+        "ok": false,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:55:25.697Z",
+        "finishedAt": "2026-04-07T10:55:29.315Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:55:25.720Z",
+        "finishedAt": "2026-04-07T10:55:25.720Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:55:25.721Z",
+        "finishedAt": "2026-04-07T10:55:28.724Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "ICMP likely filtered on public IP",
+      "explanation": "Ping failed and all tested ports are closed, which is common when public-facing firewalls drop ICMP and unsolicited inbound traffic.",
+      "context": "This does not automatically mean outage. Many providers and edge firewalls intentionally block ping on WAN addresses.",
+      "cause": "ICMP filtering and closed inbound policy on the public edge.",
+      "solution": "Validate reachability using allowed management channels (VPN, Winbox allowlist, HTTPS) and confirm firewall policy intent.",
+      "suggestedChecks": [
+        "Verify whether ICMP is intentionally blocked in input chain",
+        "Check if inbound policy is default-drop for non-whitelisted sources"
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "icmp_likely_filtered",
+        "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+        "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+        "mikrotikChecks": [
+          "Check input chain policy in /ip firewall filter print",
+          "Validate support source IP allowlist for management"
+        ],
+        "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+      },
+      "findings": [
+        {
+          "rule": "icmp_likely_filtered",
+          "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+          "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+          "mikrotikChecks": [
+            "Check input chain policy in /ip firewall filter print",
+            "Validate support source IP allowlist for management"
+          ],
+          "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+        },
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "100.67.254.13"
+    }
+  },
+  {
+    "id": "8167b72c-1154-4949-b597-48208e7634eb",
+    "target": "100.67.254.13",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T10:56:25.134Z",
+    "finishedAt": "2026-04-07T10:56:28.167Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nR�ponse de 196.179.224.98�: Impossible de joindre le r�seau de destination.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),",
+        "ok": true,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:56:25.135Z",
+        "finishedAt": "2026-04-07T10:56:25.221Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-07T10:56:25.157Z",
+        "finishedAt": "2026-04-07T10:56:25.157Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T10:56:25.157Z",
+        "finishedAt": "2026-04-07T10:56:28.164Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "100.67.254.13"
+    }
   }
 ]

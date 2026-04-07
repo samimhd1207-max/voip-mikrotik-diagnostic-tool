@@ -1,25 +1,42 @@
 const { v4: uuidv4 } = require('uuid');
 const repository = require('../repositories/diagnostic.repository');
 const { runDiagnostics } = require('../services/diagnostics/orchestrator.service');
+const { DEFAULT_PORTS } = require('../services/network/port.service');
 const HttpError = require('../utils/http-error');
 
 const createDiagnostic = async (req, res, next) => {
   try {
-    const { target, ports } = req.body;
+    const { target, ports, expectsSipService, mikrotik } = req.body;
 
     const startedAt = new Date().toISOString();
-    const diagnosticOutput = await runDiagnostics({ target, ports });
+    const diagnosticOutput = await runDiagnostics({ target, ports, expectsSipService, mikrotik });
     const finishedAt = new Date().toISOString();
+    const mikrotikResult = diagnosticOutput?.results?.mikrotik;
+
+    if (mikrotik && mikrotikResult?.authFailed) {
+      throw new HttpError(401, 'MikroTik authentication failed. Please check username/password and retry.', {
+        field: 'mikrotik.password',
+      });
+    }
+
+    if (mikrotik && mikrotikResult?.error && !mikrotikResult?.authFailed) {
+      throw new HttpError(400, `MikroTik SSH failed: ${mikrotikResult.error}`, {
+        field: 'mikrotik.host',
+      });
+    }
 
     const record = {
       id: uuidv4(),
       target,
-      ports: ports || [80, 443, 5060],
+      ports: ports || DEFAULT_PORTS,
+      expectsSipService: Boolean(expectsSipService),
+      mikrotikConfigured: Boolean(mikrotik),
       status: diagnosticOutput.status,
       startedAt,
       finishedAt,
       results: diagnosticOutput.results,
       checks: diagnosticOutput.checks,
+      analysis: diagnosticOutput.analysis,
     };
 
     await repository.save(record);
