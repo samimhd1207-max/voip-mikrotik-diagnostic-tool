@@ -133,6 +133,9 @@ function App() {
     analysis?.primaryFinding?.mikrotikChecks || analysis?.suggestedChecks || analysis?.mikrotikChecks || fallbackAnalysis.mikrotikChecks;
   const routerOsCommand =
     analysis?.primaryFinding?.routerOsCommand || analysis?.routerOsCommand || fallbackAnalysis.routerOsCommand;
+  const confidence =
+    Number.isFinite(analysis?.confidence) ? analysis.confidence : Number.isFinite(analysis?.confidenceScore) ? analysis.confidenceScore : 35;
+  const confidenceClass = confidence > 80 ? 'confidence-high' : confidence >= 50 ? 'confidence-medium' : 'confidence-low';
 
   return (
     <main className="page">
@@ -242,6 +245,10 @@ function App() {
                     ? 'Resolved'
                     : 'Failed'}
                 </strong>
+              </div>
+              <div>
+                <span className="label">Confidence</span>
+                <strong className={confidenceClass}>{confidence}%</strong>
               </div>
             </div>
 

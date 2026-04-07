@@ -119,6 +119,18 @@ button:disabled {
   margin-bottom: 0.15rem;
 }
 
+.confidence-high {
+  color: #166534;
+}
+
+.confidence-medium {
+  color: #c2410c;
+}
+
+.confidence-low {
+  color: #b91c1c;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

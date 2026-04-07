@@ -55,13 +55,24 @@ const analyzeFirewallForSipBlock = (firewallRaw) => {
 
 const analyzeNatForSip = (natRaw) => {
   const lines = natRaw.split('\n').map((line) => line.trim()).filter(Boolean);
-  const dstNatRule = lines.find((line) => /chain=dstnat/i.test(line) && /dst-port=5060/.test(line));
-  const srcNatRule = lines.find((line) => /chain=srcnat/i.test(line));
+  const sipDstNatRule = lines.find((line) => /chain=dstnat/i.test(line) && /dst-port=(5060|5061)\b/.test(line));
+  const srcNatRule = lines.find((line) => /chain=srcnat/i.test(line) && /(action=masquerade|action=src-nat)/i.test(line));
+  const rtpDstNatRule = lines.find((line) => {
+    if (!/chain=dstnat/i.test(line)) return false;
+    const rangeMatch = line.match(/dst-port=(\d+)-(\d+)/i);
+    if (!rangeMatch) return false;
+    const from = Number(rangeMatch[1]);
+    const to = Number(rangeMatch[2]);
+    const overlapsTypicalRtpRange = (from <= 20000 && to >= 10000) || (from <= 32768 && to >= 16384);
+    return overlapsTypicalRtpRange;
+  });
 
   return {
-    hasSipDstNat: Boolean(dstNatRule),
+    hasSipDstNat: Boolean(sipDstNatRule),
+    hasRtpDstNat: Boolean(rtpDstNatRule),
     hasSrcNat: Boolean(srcNatRule),
-    matchingDstNatRule: dstNatRule || null,
+    matchingSipDstNatRule: sipDstNatRule || null,
+    matchingRtpDstNatRule: rtpDstNatRule || null,
   };
 };
 
@@ -113,7 +124,13 @@ const fetchMikrotikSnapshot = async (connection) => {
       authFailed,
       analysis: {
         firewall: { blocked: false, matchingRule: null },
-        nat: { hasSipDstNat: false, hasSrcNat: false, matchingDstNatRule: null },
+        nat: {
+          hasSipDstNat: false,
+          hasRtpDstNat: false,
+          hasSrcNat: false,
+          matchingSipDstNatRule: null,
+          matchingRtpDstNatRule: null,
+        },
       },
     };
 

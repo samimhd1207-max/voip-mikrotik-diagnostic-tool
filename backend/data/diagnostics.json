@@ -4139,5 +4139,1824 @@
       ],
       "target": "100.67.254.13"
     }
+  },
+  {
+    "id": "b9ab309b-2d03-4c9c-b55f-ad94ef27a17e",
+    "target": "192.168.216.12",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-07T12:35:22.381Z",
+    "finishedAt": "2026-04-07T12:35:26.309Z",
+    "results": {
+      "ping": {
+        "success": false,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.12 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 192.168.216.12:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 192.168.216.12",
+        "ok": false,
+        "latencyMs": null,
+        "target": "192.168.216.12",
+        "startedAt": "2026-04-07T12:35:22.381Z",
+        "finishedAt": "2026-04-07T12:35:26.309Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.12",
+        "startedAt": "2026-04-07T12:35:22.405Z",
+        "finishedAt": "2026-04-07T12:35:22.405Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "192.168.216.12",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3016,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3016,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3016,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3016,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3016,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T12:35:22.405Z",
+        "finishedAt": "2026-04-07T12:35:25.422Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "ICMP likely filtered on public IP",
+      "explanation": "Ping failed and all tested ports are closed, which is common when public-facing firewalls drop ICMP and unsolicited inbound traffic.",
+      "context": "This does not automatically mean outage. Many providers and edge firewalls intentionally block ping on WAN addresses.",
+      "cause": "ICMP filtering and closed inbound policy on the public edge.",
+      "solution": "Validate reachability using allowed management channels (VPN, Winbox allowlist, HTTPS) and confirm firewall policy intent.",
+      "suggestedChecks": [
+        "Verify whether ICMP is intentionally blocked in input chain",
+        "Check if inbound policy is default-drop for non-whitelisted sources"
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "icmp_likely_filtered",
+        "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+        "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+        "mikrotikChecks": [
+          "Check input chain policy in /ip firewall filter print",
+          "Validate support source IP allowlist for management"
+        ],
+        "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+      },
+      "findings": [
+        {
+          "rule": "icmp_likely_filtered",
+          "probableCause": "Ping blocked and inbound ports closed from probe source; likely WAN edge filtering policy.",
+          "recommendedAction": "Treat as potentially expected hardening. Validate with allowed management path and ACL review.",
+          "mikrotikChecks": [
+            "Check input chain policy in /ip firewall filter print",
+            "Validate support source IP allowlist for management"
+          ],
+          "routerOsCommand": "/ip firewall filter print; /ip firewall address-list print"
+        },
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "all_ports_closed",
+          "probableCause": "All tested inbound ports are closed from this source.",
+          "recommendedAction": "Confirm whether this is expected security posture or unintended blocking.",
+          "mikrotikChecks": [
+            "Review firewall counters and policies",
+            "Check service exposure requirements"
+          ],
+          "routerOsCommand": "/ip firewall filter print stats"
+        }
+      ],
+      "target": "192.168.216.12"
+    }
+  },
+  {
+    "id": "d1cf62d3-a9b0-4490-89d2-737b788ce3b6",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T12:36:19.395Z",
+    "finishedAt": "2026-04-07T12:36:22.459Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 27,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.22.110] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.22.110�: octets=32 temps=27 ms TTL=114\r\n\r\nStatistiques Ping pour 172.217.22.110:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 27ms, Maximum = 27ms, Moyenne = 27ms",
+        "ok": true,
+        "latencyMs": 27,
+        "target": "google.com",
+        "startedAt": "2026-04-07T12:36:19.395Z",
+        "finishedAt": "2026-04-07T12:36:19.485Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "172.217.22.110"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:81a::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=172.217.22.110 AAAA=2a00:1450:4007:81a::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-07T12:36:19.415Z",
+        "finishedAt": "2026-04-07T12:36:19.450Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 61,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 62,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3040,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3039,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3040,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T12:36:19.417Z",
+        "finishedAt": "2026-04-07T12:36:22.458Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Port 5060 closed (likely normal)",
+      "explanation": "Port 5060 is closed, which is common when the target is not a VoIP/SIP endpoint.",
+      "context": "Closed SIP on generic hosts (e.g., web/public services) is usually expected and not a VoIP incident by itself.",
+      "cause": "No SIP service expected on this target.",
+      "solution": "Only investigate SIP exposure if this host is meant to run VoIP signaling.",
+      "suggestedChecks": [
+        "Confirm whether this host should provide SIP service before opening 5060."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "sip_port_5060_closed_but_optional",
+        "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+        "recommendedAction": "No SIP action required unless this host should expose SIP.",
+        "mikrotikChecks": [
+          "If SIP is expected, confirm service binding and firewall policy for port 5060."
+        ],
+        "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+      },
+      "findings": [
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        },
+        {
+          "rule": "winbox_blocked",
+          "probableCause": "Winbox blocked while HTTP/HTTPS still reachable.",
+          "recommendedAction": "Verify management ACL/allowlist for remote support.",
+          "mikrotikChecks": [
+            "Inspect input chain rules for tcp/8291"
+          ],
+          "routerOsCommand": "/ip firewall filter print where chain=input"
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "69402e03-378a-46fb-a843-d72b06c2844e",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T12:43:29.393Z",
+    "finishedAt": "2026-04-07T12:43:32.428Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T12:43:29.393Z",
+        "finishedAt": "2026-04-07T12:43:29.473Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T12:43:29.419Z",
+        "finishedAt": "2026-04-07T12:43:29.419Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3008,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3008,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 1002,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2555,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2039,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T12:43:29.419Z",
+        "finishedAt": "2026-04-07T12:43:32.427Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "0a727f0a-7ee3-417c-ad3d-f34d516d0b4b",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T12:45:28.501Z",
+    "finishedAt": "2026-04-07T12:45:31.098Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T12:45:28.501Z",
+        "finishedAt": "2026-04-07T12:45:28.599Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T12:45:28.533Z",
+        "finishedAt": "2026-04-07T12:45:28.533Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 1018,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2564,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2049,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2080,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T12:45:28.534Z",
+        "finishedAt": "2026-04-07T12:45:31.098Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "2ba686ed-105b-4b80-b5ca-6deef74f5e84",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T12:52:27.551Z",
+    "finishedAt": "2026-04-07T12:52:29.647Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T12:52:27.551Z",
+        "finishedAt": "2026-04-07T12:52:27.615Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T12:52:27.575Z",
+        "finishedAt": "2026-04-07T12:52:27.575Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 1,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 2,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2071,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2071,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T12:52:27.575Z",
+        "finishedAt": "2026-04-07T12:52:29.646Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "128f5f01-c336-4441-afa6-852b508065f2",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T12:53:20.036Z",
+    "finishedAt": "2026-04-07T12:53:23.068Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T12:53:20.036Z",
+        "finishedAt": "2026-04-07T12:53:20.127Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T12:53:20.065Z",
+        "finishedAt": "2026-04-07T12:53:20.065Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3003,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 2,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2064,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2064,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T12:53:20.065Z",
+        "finishedAt": "2026-04-07T12:53:23.068Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "DNS check not applicable for IP target",
+      "explanation": "Target is a direct IP address, so DNS resolution is not required for this test.",
+      "context": "DNS failure status should not be treated as an incident indicator for direct IP diagnostics.",
+      "cause": "No DNS lookup required for IP-based diagnostic.",
+      "solution": "Continue analyzing ping/port results. Use hostname target if DNS validation is needed.",
+      "suggestedChecks": [
+        "If needed, rerun with a hostname to validate DNS path."
+      ],
+      "overallStatus": "attention_required",
+      "primaryFinding": {
+        "rule": "dns_not_applicable",
+        "probableCause": "DNS check is not applicable for direct IP targets.",
+        "recommendedAction": "Use hostname target when DNS validation is required.",
+        "mikrotikChecks": [
+          "Optional: verify resolver config if hostname-based incidents are suspected."
+        ],
+        "routerOsCommand": "/ip dns print"
+      },
+      "findings": [
+        {
+          "rule": "dns_not_applicable",
+          "probableCause": "DNS check is not applicable for direct IP targets.",
+          "recommendedAction": "Use hostname target when DNS validation is required.",
+          "mikrotikChecks": [
+            "Optional: verify resolver config if hostname-based incidents are suspected."
+          ],
+          "routerOsCommand": "/ip dns print"
+        },
+        {
+          "rule": "sip_port_5060_closed_but_optional",
+          "probableCause": "Port 5060 is closed, which is normal when no VoIP service is expected on this target.",
+          "recommendedAction": "No SIP action required unless this host should expose SIP.",
+          "mikrotikChecks": [
+            "If SIP is expected, confirm service binding and firewall policy for port 5060."
+          ],
+          "routerOsCommand": "/ip firewall filter print where dst-port=5060"
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "52500605-415c-4314-a293-a39add43afcb",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T13:20:42.137Z",
+    "finishedAt": "2026-04-07T13:20:44.282Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T13:20:42.137Z",
+        "finishedAt": "2026-04-07T13:20:42.287Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T13:20:42.224Z",
+        "finishedAt": "2026-04-07T13:20:42.224Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2040,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2040,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T13:20:42.224Z",
+        "finishedAt": "2026-04-07T13:20:44.280Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No dominant fault detected",
+      "explanation": "No single high-confidence WAN/MikroTik fault was proven by current probes.",
+      "context": "Issue may be session/media/application-side.",
+      "cause": "Insufficient fault evidence in baseline probes.",
+      "solution": "Correlate PBX registration logs + RTP captures + provider-side traces.",
+      "suggestedChecks": [
+        "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+      ],
+      "overallStatus": "healthy",
+      "confidenceScore": 58,
+      "primaryFinding": {
+        "rule": "no_critical_issue_detected",
+        "confidenceScore": 58,
+        "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+        "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+        "evidence": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ],
+        "routerOsCommands": [
+          "/log print where message~\"sip\"",
+          "/tool torch interface=<wan-interface> port=5060,10000-20000"
+        ],
+        "routerOsCommand": "/log print where message~\"sip\"",
+        "mikrotikChecks": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ]
+      },
+      "findings": [
+        {
+          "rule": "no_critical_issue_detected",
+          "confidenceScore": 58,
+          "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+          "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+          "evidence": [
+            "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+          ],
+          "routerOsCommands": [
+            "/log print where message~\"sip\"",
+            "/tool torch interface=<wan-interface> port=5060,10000-20000"
+          ]
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "beae57d5-78a7-4828-bccb-4cce7c214f54",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T13:30:07.489Z",
+    "finishedAt": "2026-04-07T13:30:10.560Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 26,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [142.251.39.206] avec 32 octets de donn�es�:\r\nR�ponse de 142.251.39.206�: octets=32 temps=26 ms TTL=114\r\n\r\nStatistiques Ping pour 142.251.39.206:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms",
+        "ok": true,
+        "latencyMs": 26,
+        "target": "google.com",
+        "startedAt": "2026-04-07T13:30:07.489Z",
+        "finishedAt": "2026-04-07T13:30:07.601Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "142.251.39.206"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:81a::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=142.251.39.206 AAAA=2a00:1450:4007:81a::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-07T13:30:07.515Z",
+        "finishedAt": "2026-04-07T13:30:07.548Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 62,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 62,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3042,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3041,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3042,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T13:30:07.517Z",
+        "finishedAt": "2026-04-07T13:30:10.560Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No dominant fault detected",
+      "explanation": "No single high-confidence WAN/MikroTik fault was proven by current probes.",
+      "context": "Issue may be session/media/application-side.",
+      "cause": "Insufficient fault evidence in baseline probes.",
+      "solution": "Correlate PBX registration logs + RTP captures + provider-side traces.",
+      "suggestedChecks": [
+        "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+      ],
+      "overallStatus": "healthy",
+      "confidenceScore": 58,
+      "primaryFinding": {
+        "rule": "no_critical_issue_detected",
+        "confidenceScore": 58,
+        "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+        "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+        "evidence": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ],
+        "routerOsCommands": [
+          "/log print where message~\"sip\"",
+          "/tool torch interface=<wan-interface> port=5060,10000-20000"
+        ],
+        "routerOsCommand": "/log print where message~\"sip\"",
+        "mikrotikChecks": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ]
+      },
+      "findings": [
+        {
+          "rule": "no_critical_issue_detected",
+          "confidenceScore": 58,
+          "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+          "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+          "evidence": [
+            "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+          ],
+          "routerOsCommands": [
+            "/log print where message~\"sip\"",
+            "/tool torch interface=<wan-interface> port=5060,10000-20000"
+          ]
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "014fc7e9-7e7c-44c1-82e1-c33ff27f7027",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T13:30:44.065Z",
+    "finishedAt": "2026-04-07T13:30:47.103Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T13:30:44.065Z",
+        "finishedAt": "2026-04-07T13:30:44.158Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T13:30:44.096Z",
+        "finishedAt": "2026-04-07T13:30:44.096Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 20,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3006,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3005,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T13:30:44.096Z",
+        "finishedAt": "2026-04-07T13:30:47.103Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No dominant fault detected",
+      "explanation": "No single high-confidence WAN/MikroTik fault was proven by current probes.",
+      "context": "Issue may be session/media/application-side.",
+      "cause": "Insufficient fault evidence in baseline probes.",
+      "solution": "Correlate PBX registration logs + RTP captures + provider-side traces.",
+      "suggestedChecks": [
+        "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+      ],
+      "overallStatus": "healthy",
+      "confidenceScore": 58,
+      "primaryFinding": {
+        "rule": "no_critical_issue_detected",
+        "confidenceScore": 58,
+        "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+        "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+        "evidence": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ],
+        "routerOsCommands": [
+          "/log print where message~\"sip\"",
+          "/tool torch interface=<wan-interface> port=5060,10000-20000"
+        ],
+        "routerOsCommand": "/log print where message~\"sip\"",
+        "mikrotikChecks": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ]
+      },
+      "findings": [
+        {
+          "rule": "no_critical_issue_detected",
+          "confidenceScore": 58,
+          "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+          "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+          "evidence": [
+            "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+          ],
+          "routerOsCommands": [
+            "/log print where message~\"sip\"",
+            "/tool torch interface=<wan-interface> port=5060,10000-20000"
+          ]
+        }
+      ],
+      "target": "8.8.8.8"
+    }
+  },
+  {
+    "id": "a147a7ed-ae96-4d0f-af81-3ffa41c2da90",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T13:32:46.479Z",
+    "finishedAt": "2026-04-07T13:32:49.520Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 15,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=15 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 15ms, Maximum = 15ms, Moyenne = 15ms",
+        "ok": true,
+        "latencyMs": 15,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T13:32:46.479Z",
+        "finishedAt": "2026-04-07T13:32:46.565Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-07T13:32:46.508Z",
+        "finishedAt": "2026-04-07T13:32:46.508Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3011,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 17,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3011,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3012,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3012,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T13:32:46.508Z",
+        "finishedAt": "2026-04-07T13:32:49.520Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No dominant fault detected",
+      "explanation": "No single high-confidence WAN/MikroTik fault was proven by current probes.",
+      "context": "Issue may be session/media/application-side.",
+      "cause": "Insufficient fault evidence in baseline probes.",
+      "solution": "Correlate PBX registration logs + RTP captures + provider-side traces.",
+      "suggestedChecks": [
+        "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+      ],
+      "overallStatus": "healthy",
+      "confidenceScore": 58,
+      "primaryFinding": {
+        "rule": "no_critical_issue_detected",
+        "confidenceScore": 58,
+        "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+        "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+        "evidence": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ],
+        "routerOsCommands": [
+          "/log print where message~\"sip\"",
+          "/tool torch interface=<wan-interface> port=5060,10000-20000"
+        ],
+        "routerOsCommand": "/log print where message~\"sip\"",
+        "mikrotikChecks": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ]
+      },
+      "findings": [
+        {
+          "rule": "no_critical_issue_detected",
+          "confidenceScore": 58,
+          "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+          "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+          "evidence": [
+            "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+          ],
+          "routerOsCommands": [
+            "/log print where message~\"sip\"",
+            "/tool torch interface=<wan-interface> port=5060,10000-20000"
+          ]
+        }
+      ],
+      "target": "8.8.8.8"
+    }
+  },
+  {
+    "id": "c140a728-b87d-4394-9d28-d4cabf516f6b",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T13:47:26.250Z",
+    "finishedAt": "2026-04-07T13:47:28.335Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T13:47:26.250Z",
+        "finishedAt": "2026-04-07T13:47:26.342Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T13:47:26.282Z",
+        "finishedAt": "2026-04-07T13:47:26.282Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 4,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2052,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 4,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2052,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2052,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T13:47:26.282Z",
+        "finishedAt": "2026-04-07T13:47:28.334Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No dominant fault detected",
+      "explanation": "No single high-confidence WAN/MikroTik fault was proven by current probes.",
+      "context": "Issue may be session/media/application-side.",
+      "cause": "Insufficient fault evidence in baseline probes.",
+      "solution": "Correlate PBX registration logs + RTP captures + provider-side traces.",
+      "suggestedChecks": [
+        "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+      ],
+      "overallStatus": "healthy",
+      "confidenceScore": 58,
+      "primaryFinding": {
+        "rule": "no_critical_issue_detected",
+        "confidenceScore": 58,
+        "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+        "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+        "evidence": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ],
+        "routerOsCommands": [
+          "/log print where message~\"sip\"",
+          "/tool torch interface=<wan-interface> port=5060,10000-20000"
+        ],
+        "routerOsCommand": "/log print where message~\"sip\"",
+        "mikrotikChecks": [
+          "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+        ]
+      },
+      "findings": [
+        {
+          "rule": "no_critical_issue_detected",
+          "confidenceScore": 58,
+          "probableCause": "No dominant WAN/NAT/filter fault detected from combined telemetry.",
+          "recommendedAction": "Correlate PBX registration state and RTP flow captures.",
+          "evidence": [
+            "Network, VoIP probe, and MikroTik snapshot did not provide a singular high-confidence fault."
+          ],
+          "routerOsCommands": [
+            "/log print where message~\"sip\"",
+            "/tool torch interface=<wan-interface> port=5060,10000-20000"
+          ]
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "b2665ead-d095-460e-8819-a5331fdf97d0",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T14:21:02.657Z",
+    "finishedAt": "2026-04-07T14:21:04.738Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T14:21:02.657Z",
+        "finishedAt": "2026-04-07T14:21:02.747Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T14:21:02.684Z",
+        "finishedAt": "2026-04-07T14:21:02.684Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2051,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2051,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2050,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T14:21:02.684Z",
+        "finishedAt": "2026-04-07T14:21:04.736Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
   }
 ]
