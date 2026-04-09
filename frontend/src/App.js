@@ -57,6 +57,9 @@ function App() {
   const [mikrotikPort, setMikrotikPort] = useState('22');
   const [mikrotikUsername, setMikrotikUsername] = useState('');
   const [mikrotikPassword, setMikrotikPassword] = useState('');
+  const [safeRangeScan, setSafeRangeScan] = useState(false);
+  const [showOnlyOpen, setShowOnlyOpen] = useState(false);
+  const [portSearch, setPortSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
@@ -69,7 +72,7 @@ function App() {
       return;
     }
 
-    let payload = { target: trimmedTarget };
+    let payload = { target: trimmedTarget, safeRangeScan };
     if (useMikrotikAccess) {
       if (!mikrotikHost.trim() || !mikrotikUsername.trim() || !mikrotikPassword) {
         setError('Please enter MikroTik host, username, and password.');
@@ -124,7 +127,6 @@ function App() {
   const analysis = result?.analysis;
   const fallbackAnalysis = deriveFallbackAnalysisFromResults(result);
 
-  // Backward/forward compatibility across analysis payload versions.
   const probableCause =
     analysis?.primaryFinding?.probableCause || analysis?.cause || analysis?.explanation || analysis?.issue || fallbackAnalysis.probableCause;
   const recommendedAction =
@@ -136,6 +138,15 @@ function App() {
   const confidence =
     Number.isFinite(analysis?.confidence) ? analysis.confidence : Number.isFinite(analysis?.confidenceScore) ? analysis.confidenceScore : 35;
   const confidenceClass = confidence > 80 ? 'confidence-high' : confidence >= 50 ? 'confidence-medium' : 'confidence-low';
+  const allPortRows = result?.results?.ports?.ports || [];
+  const filteredPortRows = allPortRows.filter((row) => {
+    const matchOpen = showOnlyOpen ? row.open : true;
+    const matchSearch = portSearch.trim() ? String(row.port).includes(portSearch.trim()) : true;
+    return matchOpen && matchSearch;
+  });
+  const openRows = filteredPortRows.filter((row) => row.open);
+  const closedRows = filteredPortRows.filter((row) => !row.open);
+  const visibleRows = [...openRows, ...closedRows].slice(0, 50);
 
   return (
     <main className="page">
@@ -203,6 +214,15 @@ function App() {
               />
             </div>
           )}
+          <label className="checkbox-row" htmlFor="safe-range-scan">
+            <input
+              id="safe-range-scan"
+              type="checkbox"
+              checked={safeRangeScan}
+              onChange={(event) => setSafeRangeScan(event.target.checked)}
+            />
+            <span>Safe scan mode (ports 1-1024)</span>
+          </label>
 
           <button type="button" onClick={runDiagnostic} disabled={loading}>
             {loading ? 'Running diagnostic…' : 'Run diagnostic'}
@@ -253,24 +273,48 @@ function App() {
             </div>
 
             <h3>Tested ports</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Port</th>
-                  <th>State</th>
-                  <th>Response</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(result.results?.ports?.ports || []).map((port) => (
-                  <tr key={port.port}>
-                    <td>{port.port}</td>
-                    <td>{port.open ? 'Open' : 'Closed'}</td>
-                    <td>{port.responseTimeMs} ms</td>
+            <div className="port-tools">
+              <label className="checkbox-row" htmlFor="show-open-only">
+                <input
+                  id="show-open-only"
+                  type="checkbox"
+                  checked={showOnlyOpen}
+                  onChange={(event) => setShowOnlyOpen(event.target.checked)}
+                />
+                <span>Show only open ports</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Search port (e.g. 5060)"
+                value={portSearch}
+                onChange={(event) => setPortSearch(event.target.value)}
+              />
+            </div>
+            <p className="port-group-label">Open Ports: {openRows.length} | Closed Ports: {closedRows.length}</p>
+            <div className="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Port</th>
+                    <th>State</th>
+                    <th>Service</th>
+                    <th>Response Time</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {visibleRows.map((port) => (
+                    <tr key={port.port}>
+                      <td>{port.port}</td>
+                      <td>
+                        <span className={port.open ? 'state-open' : 'state-closed'}>{port.open ? 'Open' : 'Closed'}</span>
+                      </td>
+                      <td>{port.service || 'unknown'}</td>
+                      <td>{port.responseTime ?? port.responseTimeMs} ms</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <h3>Probable cause</h3>
             <p>{probableCause}</p>

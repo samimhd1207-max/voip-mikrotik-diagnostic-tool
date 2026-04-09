@@ -2,16 +2,16 @@ const isClosed = (portsMap, port) => portsMap.get(port)?.open === false;
 const looksVoipRelatedTarget = (target) => /\b(sip|voip|pbx|asterisk|trunk|softswitch)\b/i.test(target);
 
 const allowSip5060Command =
-  '/ip firewall filter add chain=forward action=accept protocol=udp dst-port=5060 comment="Allow SIP 5060"; /ip firewall filter move [find where comment="Allow SIP 5060"] 0';
+  '/ip firewall filter add chain=forward protocol=udp dst-port=5060 action=accept comment="Allow SIP"';
 
 const addSipDstNatCommand =
-  '/ip firewall nat add chain=dstnat action=dst-nat protocol=udp dst-port=5060 to-addresses=192.168.88.10 to-ports=5060 comment="SIP dst-nat 5060"';
+  '/ip firewall nat add chain=dstnat protocol=udp dst-port=5060 action=dst-nat to-addresses=192.168.88.10';
 const addRtpDstNatCommand =
   '/ip firewall nat add chain=dstnat action=dst-nat protocol=udp dst-port=10000-20000 to-addresses=192.168.88.10 to-ports=10000-20000 comment="RTP dst-nat 10000-20000"';
 const addSrcNatCommand =
   '/ip firewall nat add chain=srcnat out-interface-list=WAN action=masquerade comment="VoIP src-nat"';
 const allowRtpCommand =
-  '/ip firewall filter add chain=forward action=accept protocol=udp dst-port=10000-20000 comment="Allow RTP media"; /ip firewall filter move [find where comment="Allow RTP media"] 0';
+  '/ip firewall filter add chain=forward protocol=udp dst-port=10000-20000 action=accept comment="Allow RTP"';
 
 const buildNoActionPayload = (target) => ({
   issue: 'No issue detected',
@@ -59,6 +59,8 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
   const sipPortBlocked = isClosed(portsMap, 5060);
   const sipPortOpen = portsMap.get(5060)?.open === true;
   const firewallBlocksSip = Boolean(mikrotikSnapshot?.analysis?.firewall?.blocked);
+  const firewallHasRtpAllow = Boolean(mikrotikSnapshot?.analysis?.firewall?.hasRtpAllowRule);
+  const firewallHasRtpBlock = Boolean(mikrotikSnapshot?.analysis?.firewall?.hasRtpBlockRule);
   const hasSipDstNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasSipDstNat);
   const hasRtpDstNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasRtpDstNat);
   const hasSrcNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasSrcNat);
@@ -138,85 +140,101 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
     };
   }
 
-  if (sipPortOpen && (!hasRtpDstNat || !hasSrcNat || noRtpPortOpen)) {
+  if (sipPortOpen && (noRtpPortOpen || firewallHasRtpBlock || !firewallHasRtpAllow)) {
     return {
-      issue: 'possible one-way audio due to RTP/NAT issue',
-      explanation: 'SIP signaling is reachable but RTP media path is incomplete.',
+      issue: 'Possible one-way audio (RTP blocked)',
+      explanation: 'SIP signaling is reachable but RTP media path is blocked or not allowed.',
       context: 'Calls may establish successfully while audio is one-way or absent.',
-      cause: !hasRtpDstNat
-        ? 'RTP dst-nat missing for UDP media range.'
-        : !hasSrcNat
-        ? 'srcnat/masquerade missing for outbound media.'
-        : 'RTP ports tested are closed from probe source.',
-      solution: 'Add RTP dst-nat + srcnat and allow RTP media range in firewall.',
-      mikrotikCommands: [addRtpDstNatCommand, addSrcNatCommand, allowRtpCommand],
+      cause: firewallHasRtpBlock
+        ? 'MikroTik firewall contains a drop/reject rule for UDP 10000-20000.'
+        : noRtpPortOpen
+        ? 'RTP ports (10000-20000) tested as closed while SIP 5060 is open.'
+        : 'MikroTik firewall does not show an allow rule for UDP 10000-20000.',
+      solution: 'Allow RTP UDP 10000-20000 in forward chain and verify media flow.',
+      mikrotikCommands: [allowRtpCommand],
       overallStatus: 'attention_required',
-      confidence: hasRtpDstNat || hasSrcNat ? 74 : 89,
-      confidenceScore: hasRtpDstNat || hasSrcNat ? 74 : 89,
+      confidence: 84,
+      confidenceScore: 84,
       primaryFinding: {
-        rule: 'possible_one_way_audio_rtp_nat',
-        probableCause: 'possible one-way audio due to RTP/NAT issue',
-        recommendedAction: 'Configure RTP NAT/media rules and re-test call audio in both directions.',
+        rule: 'possible_one_way_audio_rtp_blocked',
+        probableCause: 'Possible one-way audio (RTP blocked)',
+        recommendedAction: 'Allow UDP 10000-20000 and re-test bidirectional audio.',
         mikrotikChecks: [
+          `firewallHasRtpAllow=${firewallHasRtpAllow}`,
+          `firewallHasRtpBlock=${firewallHasRtpBlock}`,
           `hasRtpDstNat=${hasRtpDstNat}`,
           `hasSrcNat=${hasSrcNat}`,
           `rtpPortsTested=${testedRtpPorts.length}`,
           `rtpAllClosed=${noRtpPortOpen}`,
         ],
-        routerOsCommand: addRtpDstNatCommand,
-        routerOsCommands: [addRtpDstNatCommand, addSrcNatCommand, allowRtpCommand],
-        confidence: hasRtpDstNat || hasSrcNat ? 74 : 89,
-        confidenceScore: hasRtpDstNat || hasSrcNat ? 74 : 89,
+        routerOsCommand: allowRtpCommand,
+        routerOsCommands: [allowRtpCommand],
+        confidence: 84,
+        confidenceScore: 84,
       },
       findings: [
         {
-          rule: 'possible_one_way_audio_rtp_nat',
-          probableCause: 'possible one-way audio due to RTP/NAT issue',
-          recommendedAction: 'Configure RTP NAT/media rules and re-test call audio in both directions.',
+          rule: 'possible_one_way_audio_rtp_blocked',
+          probableCause: 'Possible one-way audio (RTP blocked)',
+          recommendedAction: 'Allow UDP 10000-20000 and re-test bidirectional audio.',
           evidence: [
             'SIP 5060 is open/reachable.',
-            `MikroTik NAT state: hasRtpDstNat=${hasRtpDstNat}, hasSrcNat=${hasSrcNat}.`,
+            `MikroTik firewall state: hasRtpAllowRule=${firewallHasRtpAllow}, hasRtpBlockRule=${firewallHasRtpBlock}.`,
             ...(testedRtpPorts.length ? [`RTP ports tested: ${testedRtpPorts.length}, all closed=${noRtpPortOpen}.`] : ['No RTP ports were included in the network probe.']),
           ],
-          routerOsCommands: [addRtpDstNatCommand, addSrcNatCommand, allowRtpCommand],
-          confidence: hasRtpDstNat || hasSrcNat ? 74 : 89,
-          confidenceScore: hasRtpDstNat || hasSrcNat ? 74 : 89,
+          routerOsCommands: [allowRtpCommand],
+          confidence: 84,
+          confidenceScore: 84,
         },
       ],
       target,
     };
   }
 
-  if (!hasSrcNat) {
+  if (!hasRtpDstNat || !hasSrcNat) {
     return {
-      issue: 'NAT issue detected',
-      explanation: 'SIP/NAT path is missing outbound source NAT policy.',
-      context: 'Registrations/calls can fail intermittently due to invalid source addressing.',
-      cause: 'Missing srcnat/masquerade rule for WAN egress.',
-      solution: 'Add source NAT masquerade on WAN.',
-      mikrotikCommands: [addSrcNatCommand],
+      issue: 'Possible NAT issue affecting RTP',
+      explanation: 'NAT policy does not fully support RTP media traversal.',
+      context: 'Calls may connect but media may be one-way or unstable.',
+      cause: !hasRtpDstNat
+        ? 'Missing RTP dst-nat rule for UDP 10000-20000.'
+        : 'Missing srcnat/masquerade rule for WAN egress.',
+      solution: 'Add missing RTP dst-nat/srcnat rules and validate live call media.',
+      mikrotikCommands: [
+        ...(!hasRtpDstNat ? [addRtpDstNatCommand] : []),
+        ...(!hasSrcNat ? [addSrcNatCommand] : []),
+      ],
       overallStatus: 'attention_required',
-      confidence: 86,
-      confidenceScore: 86,
+      confidence: 87,
+      confidenceScore: 87,
       primaryFinding: {
-        rule: 'srcnat_missing',
-        probableCause: 'Missing srcnat/masquerade rule.',
-        recommendedAction: 'Add srcnat masquerade and retry registration/calls.',
-        mikrotikChecks: ['MikroTik analysis reports hasSrcNat=false.'],
-        routerOsCommand: addSrcNatCommand,
-        routerOsCommands: [addSrcNatCommand],
-        confidence: 86,
-        confidenceScore: 86,
+        rule: 'rtp_nat_incomplete',
+        probableCause: 'Possible NAT issue affecting RTP',
+        recommendedAction: 'Apply missing NAT rules and retest two-way audio.',
+        mikrotikChecks: [`hasRtpDstNat=${hasRtpDstNat}`, `hasSrcNat=${hasSrcNat}`],
+        routerOsCommand: !hasRtpDstNat ? addRtpDstNatCommand : addSrcNatCommand,
+        routerOsCommands: [
+          ...(!hasRtpDstNat ? [addRtpDstNatCommand] : []),
+          ...(!hasSrcNat ? [addSrcNatCommand] : []),
+        ],
+        confidence: 87,
+        confidenceScore: 87,
       },
       findings: [
         {
-          rule: 'srcnat_missing',
-          probableCause: 'Missing srcnat/masquerade rule.',
-          recommendedAction: 'Add srcnat masquerade and retry registration/calls.',
-          evidence: ['MikroTik analysis reports hasSrcNat=false.'],
-          routerOsCommands: [addSrcNatCommand],
-          confidence: 86,
-          confidenceScore: 86,
+          rule: 'rtp_nat_incomplete',
+          probableCause: 'Possible NAT issue affecting RTP',
+          recommendedAction: 'Apply missing NAT rules and retest two-way audio.',
+          evidence: [
+            `MikroTik NAT state: hasRtpDstNat=${hasRtpDstNat}`,
+            `MikroTik NAT state: hasSrcNat=${hasSrcNat}`,
+          ],
+          routerOsCommands: [
+            ...(!hasRtpDstNat ? [addRtpDstNatCommand] : []),
+            ...(!hasSrcNat ? [addSrcNatCommand] : []),
+          ],
+          confidence: 87,
+          confidenceScore: 87,
         },
       ],
       target,

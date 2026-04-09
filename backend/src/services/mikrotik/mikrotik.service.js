@@ -1,55 +1,92 @@
-const { execFile } = require('child_process');
-const { promisify } = require('util');
+const fs = require('fs');
+const { Client } = require('ssh2');
 const logger = require('../../config/logger');
 
-const execFileAsync = promisify(execFile);
-
 const looksLikeAuthFailure = (message = '') =>
-  /(permission denied|authentication failed|access denied|invalid password|incorrect password)/i.test(message);
+  /(permission denied|authentication failed|access denied|invalid password|incorrect password|all configured authentication methods failed)/i.test(message);
 
-const buildSshArgs = ({ host, username, port = 22, privateKeyPath }, command) => {
-  const sshArgs = [
-    '-p',
-    String(port),
-    '-o',
-    'StrictHostKeyChecking=accept-new',
-  ];
+const runSshCommand = async ({ host, username, password, port = 22, privateKeyPath }, command) =>
+  new Promise((resolve, reject) => {
+    const client = new Client();
+    let timeoutRef;
 
-  if (privateKeyPath) {
-    sshArgs.push('-o', 'BatchMode=yes', '-i', privateKeyPath);
-  }
+    const onDone = (error, output) => {
+      if (timeoutRef) clearTimeout(timeoutRef);
+      client.end();
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve((output || '').trim());
+    };
 
-  sshArgs.push(`${username}@${host}`, command);
-  return sshArgs;
-};
+    const connectionConfig = {
+      host,
+      port,
+      username,
+      readyTimeout: 10000,
+      tryKeyboard: false,
+      ...(privateKeyPath ? { privateKey: fs.readFileSync(privateKeyPath, 'utf8') } : {}),
+      ...(password ? { password } : {}),
+    };
 
-const runSshCommand = async (connection, command) => {
-  const { password } = connection;
-  const sshArgs = buildSshArgs(connection, command);
+    timeoutRef = setTimeout(() => {
+      onDone(new Error('MikroTik SSH timeout exceeded (10s).'));
+    }, 10000);
 
-  const executable = password ? 'sshpass' : 'ssh';
-  const args = password ? ['-p', password, 'ssh', ...sshArgs] : sshArgs;
+    client
+      .on('ready', () => {
+        client.exec(command, (execError, stream) => {
+          if (execError) {
+            onDone(execError);
+            return;
+          }
 
-  const { stdout, stderr } = await execFileAsync(executable, args, {
-    timeout: 10000,
-    windowsHide: true,
+          let stdout = '';
+          let stderr = '';
+          stream.on('data', (data) => {
+            stdout += data.toString();
+          });
+          stream.stderr.on('data', (data) => {
+            stderr += data.toString();
+          });
+          stream.on('close', () => {
+            onDone(null, `${stdout}${stderr}`);
+          });
+        });
+      })
+      .on('error', (error) => onDone(error))
+      .connect(connectionConfig);
   });
-
-  return `${stdout || ''}${stderr || ''}`.trim();
-};
 
 const analyzeFirewallForSipBlock = (firewallRaw) => {
   const lines = firewallRaw.split('\n').map((line) => line.trim()).filter(Boolean);
-  const blockedRule = lines.find(
+  const sipBlockedRule = lines.find(
     (line) =>
       /(?:drop|reject)/i.test(line) &&
       /dst-port=5060/.test(line) &&
       /(protocol=(tcp|udp)|udp|tcp)/i.test(line)
   );
+  const rtpAllowRule = lines.find(
+    (line) =>
+      /action=accept/i.test(line) &&
+      /protocol=udp/i.test(line) &&
+      /dst-port=10000-20000/i.test(line)
+  );
+  const rtpBlockedRule = lines.find(
+    (line) =>
+      /(?:drop|reject)/i.test(line) &&
+      /protocol=udp/i.test(line) &&
+      /dst-port=10000-20000/i.test(line)
+  );
 
   return {
-    blocked: Boolean(blockedRule),
-    matchingRule: blockedRule || null,
+    blocked: Boolean(sipBlockedRule),
+    matchingRule: sipBlockedRule || null,
+    hasRtpAllowRule: Boolean(rtpAllowRule),
+    hasRtpBlockRule: Boolean(rtpBlockedRule),
+    matchingRtpAllowRule: rtpAllowRule || null,
+    matchingRtpBlockRule: rtpBlockedRule || null,
   };
 };
 
@@ -123,7 +160,14 @@ const fetchMikrotikSnapshot = async (connection) => {
       error: error.message,
       authFailed,
       analysis: {
-        firewall: { blocked: false, matchingRule: null },
+        firewall: {
+          blocked: false,
+          matchingRule: null,
+          hasRtpAllowRule: false,
+          hasRtpBlockRule: false,
+          matchingRtpAllowRule: null,
+          matchingRtpBlockRule: null,
+        },
         nat: {
           hasSipDstNat: false,
           hasRtpDstNat: false,

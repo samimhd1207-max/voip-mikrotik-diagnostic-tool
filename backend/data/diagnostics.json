@@ -5958,5 +5958,3205 @@
       ],
       "target": "192.168.216.236"
     }
+  },
+  {
+    "id": "88aa0ebd-b180-4376-b80c-329e40594e63",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T15:53:44.815Z",
+    "finishedAt": "2026-04-07T15:53:46.913Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T15:53:44.815Z",
+        "finishedAt": "2026-04-07T15:53:44.892Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-07T15:53:44.845Z",
+        "finishedAt": "2026-04-07T15:53:44.845Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2067,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2065,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T15:53:44.845Z",
+        "finishedAt": "2026-04-07T15:53:46.912Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "455b6eb8-6611-47d9-9536-9e3c2951977a",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T15:53:55.381Z",
+    "finishedAt": "2026-04-07T15:53:58.426Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T15:53:55.382Z",
+        "finishedAt": "2026-04-07T15:53:55.465Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-07T15:53:55.411Z",
+        "finishedAt": "2026-04-07T15:53:55.411Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3014,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3015,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2050,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2048,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-07T15:53:55.411Z",
+        "finishedAt": "2026-04-07T15:53:58.426Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "08dfcaf9-61c9-4cb4-b134-720f0afa1a7a",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-07T15:54:09.717Z",
+    "finishedAt": "2026-04-07T15:54:12.849Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [142.251.209.78] avec 32 octets de donn�es�:\r\nR�ponse de 142.251.209.78�: octets=32 temps=16 ms TTL=117\r\n\r\nStatistiques Ping pour 142.251.209.78:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "google.com",
+        "startedAt": "2026-04-07T15:54:09.717Z",
+        "finishedAt": "2026-04-07T15:54:09.862Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "142.251.39.110"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:80f::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=142.251.39.110 AAAA=2a00:1450:4007:80f::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-07T15:54:09.739Z",
+        "finishedAt": "2026-04-07T15:54:09.786Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 109,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 108,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3106,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3106,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3106,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-07T15:54:09.742Z",
+        "finishedAt": "2026-04-07T15:54:12.848Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "84a51cc3-c5d2-49bf-9399-ecf900db118d",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T08:10:02.444Z",
+    "finishedAt": "2026-04-08T08:10:04.553Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T08:10:02.444Z",
+        "finishedAt": "2026-04-08T08:10:02.542Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T08:10:02.481Z",
+        "finishedAt": "2026-04-08T08:10:02.481Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 4,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2067,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T08:10:02.481Z",
+        "finishedAt": "2026-04-08T08:10:04.552Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "27546858-563d-4a39-a387-12e7add21395",
+    "target": "google.com",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T09:40:09.593Z",
+    "finishedAt": "2026-04-08T09:40:12.663Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 26,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.20.46] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.20.46�: octets=32 temps=26 ms TTL=114\r\n\r\nStatistiques Ping pour 172.217.20.46:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms",
+        "ok": true,
+        "latencyMs": 26,
+        "target": "google.com",
+        "startedAt": "2026-04-08T09:40:09.593Z",
+        "finishedAt": "2026-04-08T09:40:09.699Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "172.217.20.46"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:80f::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=172.217.20.46 AAAA=2a00:1450:4007:80f::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-08T09:40:09.617Z",
+        "finishedAt": "2026-04-08T09:40:09.659Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 60,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 60,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3040,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3040,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3040,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:open, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-08T09:40:09.621Z",
+        "finishedAt": "2026-04-08T09:40:12.662Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "c2e31e4c-a2c6-4916-b144-a278d3460e11",
+    "target": "8.8.8.8",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T09:41:03.675Z",
+    "finishedAt": "2026-04-08T09:41:06.707Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 16,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  8.8.8.8 avec 32 octets de donn�es�:\r\nR�ponse de 8.8.8.8�: octets=32 temps=16 ms TTL=116\r\n\r\nStatistiques Ping pour 8.8.8.8:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 16ms, Maximum = 16ms, Moyenne = 16ms",
+        "ok": true,
+        "latencyMs": 16,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-08T09:41:03.675Z",
+        "finishedAt": "2026-04-08T09:41:03.792Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "8.8.8.8",
+        "startedAt": "2026-04-08T09:41:03.706Z",
+        "finishedAt": "2026-04-08T09:41:03.706Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "8.8.8.8",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3001,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 19,
+            "error": null
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3001,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3001,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3001,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:open, 8291:timeout, 5060:timeout, 5061:timeout",
+        "ok": false,
+        "startedAt": "2026-04-08T09:41:03.706Z",
+        "finishedAt": "2026-04-08T09:41:06.707Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "8.8.8.8"
+    }
+  },
+  {
+    "id": "e1ce034c-c524-4159-abc4-1115912e5acd",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T09:41:22.658Z",
+    "finishedAt": "2026-04-08T09:41:24.753Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T09:41:22.658Z",
+        "finishedAt": "2026-04-08T09:41:22.729Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T09:41:22.681Z",
+        "finishedAt": "2026-04-08T09:41:22.681Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 2,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 2,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2071,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2058,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T09:41:22.682Z",
+        "finishedAt": "2026-04-08T09:41:24.753Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "671bad08-14f2-4d8d-ba66-4cd9717b465f",
+    "target": "196.179.224.99",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-08T09:43:16.809Z",
+    "finishedAt": "2026-04-08T09:43:18.892Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  196.179.224.99 avec 32 octets de donn�es�:\r\nR�ponse de 196.179.224.99�: octets=32 temps=1 ms TTL=255\r\n\r\nStatistiques Ping pour 196.179.224.99:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "196.179.224.99",
+        "startedAt": "2026-04-08T09:43:16.809Z",
+        "finishedAt": "2026-04-08T09:43:16.876Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "196.179.224.99",
+        "startedAt": "2026-04-08T09:43:16.834Z",
+        "finishedAt": "2026-04-08T09:43:16.834Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "196.179.224.99",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:ECONNREFUSED, 443:ECONNREFUSED, 8291:ECONNREFUSED, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T09:43:16.834Z",
+        "finishedAt": "2026-04-08T09:43:18.891Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "196.179.224.99"
+    }
+  },
+  {
+    "id": "6407c072-cddb-4d90-9eb1-e7b898b75605",
+    "target": "196.179.224.99",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-08T10:43:47.695Z",
+    "finishedAt": "2026-04-08T10:43:49.785Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 3,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  196.179.224.99 avec 32 octets de donn�es�:\r\nR�ponse de 196.179.224.99�: octets=32 temps=3 ms TTL=255\r\n\r\nStatistiques Ping pour 196.179.224.99:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 3ms, Maximum = 3ms, Moyenne = 3ms",
+        "ok": true,
+        "latencyMs": 3,
+        "target": "196.179.224.99",
+        "startedAt": "2026-04-08T10:43:47.695Z",
+        "finishedAt": "2026-04-08T10:43:47.779Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "196.179.224.99",
+        "startedAt": "2026-04-08T10:43:47.719Z",
+        "finishedAt": "2026-04-08T10:43:47.720Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "196.179.224.99",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2045,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2064,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2048,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2064,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:ECONNREFUSED, 443:ECONNREFUSED, 8291:ECONNREFUSED, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T10:43:47.720Z",
+        "finishedAt": "2026-04-08T10:43:49.784Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "196.179.224.99"
+    }
+  },
+  {
+    "id": "ab045ee7-327e-440a-8e6c-53a65bc40738",
+    "target": "192.168.216.163",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-08T10:56:09.764Z",
+    "finishedAt": "2026-04-08T10:56:11.847Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 0,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.163 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.163�: octets=32 temps<1ms TTL=128\r\n\r\nStatistiques Ping pour 192.168.216.163:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 0ms, Maximum = 0ms, Moyenne = 0ms",
+        "ok": true,
+        "latencyMs": 0,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T10:56:09.764Z",
+        "finishedAt": "2026-04-08T10:56:09.834Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T10:56:09.792Z",
+        "finishedAt": "2026-04-08T10:56:09.792Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "192.168.216.163",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2039,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2039,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2039,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:ECONNREFUSED, 443:ECONNREFUSED, 8291:ECONNREFUSED, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T10:56:09.792Z",
+        "finishedAt": "2026-04-08T10:56:11.847Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.163"
+    }
+  },
+  {
+    "id": "00f8aa02-593f-44bc-a19d-4103033dc5fd",
+    "target": "192.168.216.163",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-08T10:59:01.162Z",
+    "finishedAt": "2026-04-08T10:59:03.229Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 0,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.163 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.163�: octets=32 temps<1ms TTL=128\r\n\r\nStatistiques Ping pour 192.168.216.163:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 0ms, Maximum = 0ms, Moyenne = 0ms",
+        "ok": true,
+        "latencyMs": 0,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T10:59:01.162Z",
+        "finishedAt": "2026-04-08T10:59:01.249Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T10:59:01.193Z",
+        "finishedAt": "2026-04-08T10:59:01.193Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "192.168.216.163",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2035,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2036,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2035,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:ECONNREFUSED, 443:ECONNREFUSED, 8291:ECONNREFUSED, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T10:59:01.193Z",
+        "finishedAt": "2026-04-08T10:59:03.229Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.163"
+    }
+  },
+  {
+    "id": "01d6aab8-2f55-4010-b61c-97403c2eeb41",
+    "target": "192.168.216.163",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-08T13:22:48.638Z",
+    "finishedAt": "2026-04-08T13:22:50.681Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 0,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.163 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.163�: octets=32 temps<1ms TTL=128\r\n\r\nStatistiques Ping pour 192.168.216.163:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 0ms, Maximum = 0ms, Moyenne = 0ms",
+        "ok": true,
+        "latencyMs": 0,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T13:22:48.638Z",
+        "finishedAt": "2026-04-08T13:22:48.728Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.163",
+        "startedAt": "2026-04-08T13:22:48.667Z",
+        "finishedAt": "2026-04-08T13:22:48.667Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "192.168.216.163",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2011,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2012,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2012,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2012,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2012,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:ECONNREFUSED, 443:ECONNREFUSED, 8291:ECONNREFUSED, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T13:22:48.668Z",
+        "finishedAt": "2026-04-08T13:22:50.680Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.163"
+    }
+  },
+  {
+    "id": "7940fc2c-da94-4746-901f-a71b99f2dfeb",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T13:45:22.314Z",
+    "finishedAt": "2026-04-08T13:45:25.343Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T13:45:22.314Z",
+        "finishedAt": "2026-04-08T13:45:22.387Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T13:45:22.342Z",
+        "finishedAt": "2026-04-08T13:45:22.342Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3000,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3001,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 1,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2037,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2036,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T13:45:22.342Z",
+        "finishedAt": "2026-04-08T13:45:25.343Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "87b388a6-c601-42ed-9023-2f803f220c79",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T14:01:00.433Z",
+    "finishedAt": "2026-04-08T14:01:02.510Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T14:01:00.434Z",
+        "finishedAt": "2026-04-08T14:01:00.516Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T14:01:00.459Z",
+        "finishedAt": "2026-04-08T14:01:00.459Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 4,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2048,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2047,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2048,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T14:01:00.459Z",
+        "finishedAt": "2026-04-08T14:01:02.508Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "e902869b-af37-4b49-a462-b79ea01cedbb",
+    "target": "192.168.216.236",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": true,
+    "status": "healthy",
+    "startedAt": "2026-04-08T14:01:16.300Z",
+    "finishedAt": "2026-04-08T14:01:18.385Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T14:01:16.300Z",
+        "finishedAt": "2026-04-08T14:01:16.388Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T14:01:16.332Z",
+        "finishedAt": "2026-04-08T14:01:16.332Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 80,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2050,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2050,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2049,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:open, 443:ECONNREFUSED, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T14:01:16.332Z",
+        "finishedAt": "2026-04-08T14:01:18.383Z"
+      },
+      "mikrotik": {
+        "enabled": true,
+        "firewallRaw": "",
+        "natRaw": "0 chain=srcnat action=masquerade out-interface-list=WAN log=no log-prefix=\r\n1 chain=dstnat action=dst-nat to-addresses=192.168.30.107 protocol=tcp dst-address=192.168.216.186 dst-port=80,443 log=no log-prefix=",
+        "interfacesRaw": "0 R  name=ether1 default-name=ether1 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:54 last-link-up-time=2026-04-07 06:04:05 link-downs=0\r\n 1  S name=ether2 default-name=ether2 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:55 link-downs=0\r\n 2 RS name=ether3 default-name=ether3 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:56 last-link-up-time=2026-04-07 06:04:07 link-downs=0\r\n 3  S name=ether4 default-name=ether4 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:57 link-downs=0\r\n 4  S name=ether5 default-name=ether5 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:58 link-downs=0\r\n 5 RS name=wlan1 default-name=wlan1 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:59 last-link-down-time=2026-04-07 17:08:26 last-link-up-time=2026-04-08 08:05:08 link-downs=1\r\n 6 RS name=wlan2 default-name=wlan2 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:5A last-link-up-time=2026-04-07 08:07:20 link-downs=0\r\n 7 R  name=VLAN10 type=vlan mtu=1500 actual-mtu=1500 l2mtu=1594 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 8 R  name=bridge1 type=bridge mtu=auto actual-mtu=1500 l2mtu=1598 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 9 R  name=lo type=loopback mtu=65536 actual-mtu=65536 mac-address=00:00:00:00:00:00 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n10    comment=sim not present name=lte1 default-name=lte1 type=lte mtu=1500 actual-mtu=1500 mac-address=66:8C:1A:00:18:01 link-downs=0",
+        "analysis": {
+          "firewall": {
+            "blocked": false,
+            "matchingRule": null,
+            "hasRtpAllowRule": false,
+            "hasRtpBlockRule": false,
+            "matchingRtpAllowRule": null,
+            "matchingRtpBlockRule": null
+          },
+          "nat": {
+            "hasSipDstNat": false,
+            "hasRtpDstNat": false,
+            "hasSrcNat": true,
+            "matchingSipDstNatRule": null,
+            "matchingRtpDstNatRule": null
+          }
+        }
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "92f76a55-42a6-4497-a3f5-5f6bfe7765e7",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T14:40:59.756Z",
+    "finishedAt": "2026-04-08T14:41:02.804Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:40:59.756Z",
+        "finishedAt": "2026-04-08T14:40:59.853Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:40:59.796Z",
+        "finishedAt": "2026-04-08T14:40:59.796Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3004,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3002,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 3,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2083,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2083,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T14:40:59.797Z",
+        "finishedAt": "2026-04-08T14:41:02.802Z"
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "e6e6d7f4-bfb9-43a4-883b-4e391d5fa54d",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": true,
+    "status": "healthy",
+    "startedAt": "2026-04-08T14:41:36.931Z",
+    "finishedAt": "2026-04-08T14:41:39.974Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:41:36.932Z",
+        "finishedAt": "2026-04-08T14:41:37.016Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:41:36.964Z",
+        "finishedAt": "2026-04-08T14:41:36.964Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3008,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3007,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2038,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2038,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T14:41:36.964Z",
+        "finishedAt": "2026-04-08T14:41:39.973Z"
+      },
+      "mikrotik": {
+        "enabled": true,
+        "firewallRaw": "",
+        "natRaw": "0 chain=srcnat action=masquerade out-interface-list=WAN log=no log-prefix=\r\n1 chain=dstnat action=dst-nat to-addresses=192.168.30.107 protocol=tcp dst-address=192.168.216.186 dst-port=80,443 log=no log-prefix=",
+        "interfacesRaw": "0 R  name=ether1 default-name=ether1 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:54 last-link-up-time=2026-04-07 06:04:05 link-downs=0\r\n 1  S name=ether2 default-name=ether2 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:55 link-downs=0\r\n 2 RS name=ether3 default-name=ether3 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:56 last-link-up-time=2026-04-07 06:04:07 link-downs=0\r\n 3  S name=ether4 default-name=ether4 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:57 link-downs=0\r\n 4  S name=ether5 default-name=ether5 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:58 link-downs=0\r\n 5 RS name=wlan1 default-name=wlan1 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:59 last-link-down-time=2026-04-07 17:08:26 last-link-up-time=2026-04-08 08:05:08 link-downs=1\r\n 6 RS name=wlan2 default-name=wlan2 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:5A last-link-up-time=2026-04-07 08:07:20 link-downs=0\r\n 7 R  name=VLAN10 type=vlan mtu=1500 actual-mtu=1500 l2mtu=1594 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 8 R  name=bridge1 type=bridge mtu=auto actual-mtu=1500 l2mtu=1598 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 9 R  name=lo type=loopback mtu=65536 actual-mtu=65536 mac-address=00:00:00:00:00:00 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n10    comment=sim not present name=lte1 default-name=lte1 type=lte mtu=1500 actual-mtu=1500 mac-address=66:8C:1A:00:18:01 link-downs=0",
+        "analysis": {
+          "firewall": {
+            "blocked": false,
+            "matchingRule": null,
+            "hasRtpAllowRule": false,
+            "hasRtpBlockRule": false,
+            "matchingRtpAllowRule": null,
+            "matchingRtpBlockRule": null
+          },
+          "nat": {
+            "hasSipDstNat": false,
+            "hasRtpDstNat": false,
+            "hasSrcNat": true,
+            "matchingSipDstNatRule": null,
+            "matchingRtpDstNatRule": null
+          }
+        }
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "3f839c61-2bf3-4be6-9508-0920a84d0b2a",
+    "target": "192.168.216.186",
+    "ports": [
+      80,
+      443,
+      8291,
+      5060,
+      5061
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": true,
+    "status": "healthy",
+    "startedAt": "2026-04-08T14:42:55.971Z",
+    "finishedAt": "2026-04-08T14:42:59.005Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:42:55.971Z",
+        "finishedAt": "2026-04-08T14:42:56.058Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T14:42:55.996Z",
+        "finishedAt": "2026-04-08T14:42:55.996Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 80,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3005,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 3005,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 5060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2053,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2052,
+            "error": "ECONNREFUSED"
+          }
+        ],
+        "rawOutput": "80:timeout, 443:timeout, 8291:open, 5060:ECONNREFUSED, 5061:ECONNREFUSED",
+        "ok": false,
+        "startedAt": "2026-04-08T14:42:55.997Z",
+        "finishedAt": "2026-04-08T14:42:59.003Z"
+      },
+      "mikrotik": {
+        "enabled": true,
+        "firewallRaw": "",
+        "natRaw": "0 chain=srcnat action=masquerade out-interface-list=WAN log=no log-prefix=\r\n1 chain=dstnat action=dst-nat to-addresses=192.168.30.107 protocol=tcp dst-address=192.168.216.186 dst-port=80,443 log=no log-prefix=",
+        "interfacesRaw": "0 R  name=ether1 default-name=ether1 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:54 last-link-up-time=2026-04-07 06:04:05 link-downs=0\r\n 1  S name=ether2 default-name=ether2 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:55 link-downs=0\r\n 2 RS name=ether3 default-name=ether3 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:56 last-link-up-time=2026-04-07 06:04:07 link-downs=0\r\n 3  S name=ether4 default-name=ether4 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:57 link-downs=0\r\n 4  S name=ether5 default-name=ether5 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:58 link-downs=0\r\n 5 RS name=wlan1 default-name=wlan1 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:59 last-link-down-time=2026-04-07 17:08:26 last-link-up-time=2026-04-08 08:05:08 link-downs=1\r\n 6 RS name=wlan2 default-name=wlan2 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:5A last-link-up-time=2026-04-07 08:07:20 link-downs=0\r\n 7 R  name=VLAN10 type=vlan mtu=1500 actual-mtu=1500 l2mtu=1594 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 8 R  name=bridge1 type=bridge mtu=auto actual-mtu=1500 l2mtu=1598 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 9 R  name=lo type=loopback mtu=65536 actual-mtu=65536 mac-address=00:00:00:00:00:00 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n10    comment=sim not present name=lte1 default-name=lte1 type=lte mtu=1500 actual-mtu=1500 mac-address=66:8C:1A:00:18:01 link-downs=0",
+        "analysis": {
+          "firewall": {
+            "blocked": false,
+            "matchingRule": null,
+            "hasRtpAllowRule": false,
+            "hasRtpBlockRule": false,
+            "matchingRtpAllowRule": null,
+            "matchingRtpBlockRule": null
+          },
+          "nat": {
+            "hasSipDstNat": false,
+            "hasRtpDstNat": false,
+            "hasSrcNat": true,
+            "matchingSipDstNatRule": null,
+            "matchingRtpDstNatRule": null
+          }
+        }
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "96791803-5548-4930-a7be-0d53c9d76f1b",
+    "target": "192.168.216.236",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-08T15:49:20.322Z",
+    "finishedAt": "2026-04-08T15:49:22.450Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T15:49:20.322Z",
+        "finishedAt": "2026-04-08T15:49:20.398Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-08T15:49:20.348Z",
+        "finishedAt": "2026-04-08T15:49:20.348Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2048,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2048,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "open",
+            "service": "http",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2047,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2047,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2046,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2046,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2047,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2047,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:open, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-08T15:49:20.398Z",
+        "finishedAt": "2026-04-08T15:49:22.448Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "1c336d21-ea63-4bcd-88a2-1693dc56e5e2",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": true,
+    "status": "healthy",
+    "startedAt": "2026-04-08T15:50:25.898Z",
+    "finishedAt": "2026-04-08T15:50:29.038Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T15:50:25.898Z",
+        "finishedAt": "2026-04-08T15:50:25.992Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-08T15:50:25.927Z",
+        "finishedAt": "2026-04-08T15:50:25.927Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 9,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 9,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 10,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 10,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2060,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2059,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2059,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2509,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2509,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2060,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2062,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2062,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2510,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2510,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2061,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2061,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2060,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2060,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2061,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2061,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 9,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 9,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-08T15:50:26.523Z",
+        "finishedAt": "2026-04-08T15:50:29.035Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": true,
+        "firewallRaw": "",
+        "natRaw": "0 chain=srcnat action=masquerade out-interface-list=WAN log=no log-prefix=\r\n1 chain=dstnat action=dst-nat to-addresses=192.168.30.107 protocol=tcp dst-address=192.168.216.186 dst-port=80,443 log=no log-prefix=",
+        "interfacesRaw": "0 R  name=ether1 default-name=ether1 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:54 last-link-up-time=2026-04-07 06:04:05 link-downs=0\r\n 1  S name=ether2 default-name=ether2 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:55 link-downs=0\r\n 2 RS name=ether3 default-name=ether3 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:56 last-link-up-time=2026-04-07 06:04:07 link-downs=0\r\n 3  S name=ether4 default-name=ether4 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:57 link-downs=0\r\n 4  S name=ether5 default-name=ether5 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:58 link-downs=0\r\n 5 RS name=wlan1 default-name=wlan1 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:59 last-link-down-time=2026-04-07 17:08:26 last-link-up-time=2026-04-08 08:05:08 link-downs=1\r\n 6 RS name=wlan2 default-name=wlan2 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:5A last-link-up-time=2026-04-07 08:07:20 link-downs=0\r\n 7 R  name=VLAN10 type=vlan mtu=1500 actual-mtu=1500 l2mtu=1594 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 8 R  name=bridge1 type=bridge mtu=auto actual-mtu=1500 l2mtu=1598 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 9 R  name=lo type=loopback mtu=65536 actual-mtu=65536 mac-address=00:00:00:00:00:00 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n10    comment=sim not present name=lte1 default-name=lte1 type=lte mtu=1500 actual-mtu=1500 mac-address=66:8C:1A:00:18:01 link-downs=0",
+        "analysis": {
+          "firewall": {
+            "blocked": false,
+            "matchingRule": null,
+            "hasRtpAllowRule": false,
+            "hasRtpBlockRule": false,
+            "matchingRtpAllowRule": null,
+            "matchingRtpBlockRule": null
+          },
+          "nat": {
+            "hasSipDstNat": false,
+            "hasRtpDstNat": false,
+            "hasSrcNat": true,
+            "matchingSipDstNatRule": null,
+            "matchingRtpDstNatRule": null
+          }
+        }
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
   }
 ]

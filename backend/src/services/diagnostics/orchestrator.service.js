@@ -4,6 +4,37 @@ const { resolveDns } = require('../network/dns.service');
 const { checkPorts, DEFAULT_PORTS } = require('../network/port.service');
 const { buildAnalysis } = require('./analysis.service');
 const { fetchMikrotikSnapshot } = require('../mikrotik/mikrotik.service');
+const NAT_PORT_PATTERN = /dst-port=([\d,-]+)/ig;
+
+const expandPortToken = (token) => {
+  if (/^\d+$/.test(token)) return [Number(token)];
+  const rangeMatch = token.match(/^(\d+)-(\d+)$/);
+  if (!rangeMatch) return [];
+  const from = Number(rangeMatch[1]);
+  const to = Number(rangeMatch[2]);
+  if (to < from) return [];
+  const size = to - from + 1;
+  if (size > 30) return [from, to];
+  return Array.from({ length: size }, (_, index) => from + index);
+};
+
+const extractPortsFromNatRaw = (natRaw = '') => {
+  const collected = new Set();
+  let match = NAT_PORT_PATTERN.exec(natRaw);
+  while (match) {
+    const expression = match[1];
+    expression.split(',').forEach((token) => {
+      expandPortToken(token.trim()).forEach((port) => {
+        if (port >= 1 && port <= 65535) {
+          collected.add(port);
+        }
+      });
+    });
+    match = NAT_PORT_PATTERN.exec(natRaw);
+  }
+  NAT_PORT_PATTERN.lastIndex = 0;
+  return [...collected];
+};
 
 const runSafely = async (runner, fallback) => {
   try {
@@ -17,11 +48,11 @@ const runSafely = async (runner, fallback) => {
   }
 };
 
-const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrotik = null }) => {
-  const effectivePorts = ports || DEFAULT_PORTS;
+const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrotik = null, safeRangeScan = false }) => {
+  const requestedPorts = ports || DEFAULT_PORTS;
   const startedAt = new Date().toISOString();
 
-  const [ping, dns, portCheck, mikrotikSnapshot] = await Promise.all([
+  const [ping, dns, mikrotikSnapshot] = await Promise.all([
     runSafely(
       () => pingTarget(target),
       {
@@ -49,23 +80,6 @@ const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrot
       }
     ),
     runSafely(
-      () => checkPorts(target, effectivePorts),
-      {
-        success: false,
-        ports: effectivePorts.map((port) => ({
-          port,
-          success: false,
-          open: false,
-          responseTimeMs: 0,
-          error: 'port-check-execution-failed',
-        })),
-        rawOutput: 'Port check execution failed unexpectedly.',
-        ok: false,
-        target,
-        startedAt,
-      }
-    ),
-    runSafely(
       () => fetchMikrotikSnapshot(mikrotik),
       {
         enabled: false,
@@ -74,10 +88,33 @@ const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrot
     ),
   ]);
 
+  const dynamicNatPorts = extractPortsFromNatRaw(mikrotikSnapshot?.natRaw || '');
+  const effectivePorts = [...new Set([...requestedPorts, ...dynamicNatPorts])];
+
+  const portCheck = await runSafely(
+    () => checkPorts(target, effectivePorts, { safeRangeScan, timeoutMs: 2500, concurrency: 50 }),
+    {
+      success: false,
+      ports: effectivePorts.map((port) => ({
+        port,
+        state: 'closed',
+        service: 'unknown',
+        responseTime: 0,
+        success: false,
+        open: false,
+        responseTimeMs: 0,
+        error: 'port-check-execution-failed',
+      })),
+      rawOutput: 'Port check execution failed unexpectedly.',
+      ok: false,
+      target,
+      startedAt,
+    }
+  );
+
   const dnsHealthy = dns.applicable === false || dns.success;
   const status = ping.success && dnsHealthy && portCheck.success ? 'healthy' : 'degraded';
 
-  // Keep analysis engine integration without blocking primary response format.
   const analysis = buildAnalysis({
     target,
     ping,

@@ -20,6 +20,7 @@
     "helmet": "^8.0.0",
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
+    "ssh2": "^1.17.0",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
