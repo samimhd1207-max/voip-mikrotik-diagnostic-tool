@@ -21,6 +21,24 @@ const disableFtpCommand =
   '/ip service disable ftp';
 const openSipFirewallCommand =
   '/ip firewall filter add chain=forward protocol=udp dst-port=5060 action=accept comment="Allow SIP signaling"';
+const allowByPortCommand = (port) =>
+  `/ip firewall filter add chain=forward protocol=tcp dst-port=${port} action=accept comment="Allow required service port ${port}"`;
+const fixDhcpMismatchCommand =
+  '/ip dhcp-server network print; /ip pool print; # Ensure DHCP network and pool match active LAN subnet';
+const allowForwardByProtocolAndPort = (protocol, dstPort) =>
+  `/ip firewall filter add chain=forward protocol=${protocol} dst-port=${dstPort} action=accept comment="Allow forwarded ${protocol.toUpperCase()} ${dstPort}"`;
+
+const buildDiagnosisEntry = ({ problem, cause, impact, solution, mikrotikCommands = [], severity = 'problem' }) => ({
+  problem,
+  cause,
+  impact,
+  solution,
+  mikrotikCommands,
+  severity,
+});
+
+const withFallbackActions = (recommendedActions, fallbackAction) =>
+  recommendedActions.length > 0 ? recommendedActions : [fallbackAction];
 
 const buildNoActionPayload = (target) => ({
   issue: 'Healthy baseline with hardening opportunities',
@@ -61,8 +79,26 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
   const portsMap = new Map(ports.map((item) => [item.port, item]));
   const sipExpected = expectsSipService || looksVoipRelatedTarget(target);
 
-  if (!sipExpected || !mikrotikSnapshot?.enabled || ping?.ok !== true) {
-    return buildNoActionPayload(target);
+  if (ping?.ok !== true) {
+    return {
+      ...buildNoActionPayload(target),
+      issue: 'Target is unreachable',
+      explanation: 'Ping checks failed from the diagnostic probe.',
+      context: 'Routing, WAN reachability, host availability, or ICMP policy may be preventing access.',
+      cause: 'No successful network path to target during active checks.',
+      solution: 'Validate WAN routing, host status, and firewall policy before application-level troubleshooting.',
+      overallStatus: 'attention_required',
+      recommendedActions: [
+        buildDiagnosisEntry({
+          problem: 'Target is unreachable',
+          cause: 'The probe cannot reach the target host over IP.',
+          impact: 'All dependent services (VoIP, web, management) appear down from this probe location.',
+          solution: 'Check WAN link, default route, and upstream reachability; then retest.',
+          mikrotikCommands: ['/interface print; /ip route print where dst-address=0.0.0.0/0'],
+          severity: 'problem',
+        }),
+      ],
+    };
   }
 
   const sipPortBlocked = isClosed(portsMap, 5060);
@@ -70,13 +106,87 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
   const firewallBlocksSip = Boolean(mikrotikSnapshot?.analysis?.firewall?.blocked);
   const firewallHasRtpAllow = Boolean(mikrotikSnapshot?.analysis?.firewall?.hasRtpAllowRule);
   const firewallHasRtpBlock = Boolean(mikrotikSnapshot?.analysis?.firewall?.hasRtpBlockRule);
+  const firewallHasSipAllow = Boolean(mikrotikSnapshot?.analysis?.firewall?.hasSipAllowRule);
   const hasSipDstNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasSipDstNat);
   const hasRtpDstNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasRtpDstNat);
   const hasSrcNat = Boolean(mikrotikSnapshot?.analysis?.nat?.hasSrcNat);
+  const unprotectedDstNatRules = Array.isArray(mikrotikSnapshot?.analysis?.nat?.unprotectedDstNatRules)
+    ? mikrotikSnapshot.analysis.nat.unprotectedDstNatRules
+    : [];
 
   const testedRtpPorts = ports.filter((item) => item.port >= 10000 && item.port <= 20000);
   const noRtpPortOpen = testedRtpPorts.length > 0 && testedRtpPorts.every((item) => item.open === false);
   const insecurePorts = [21, 23, 25, 110].filter((port) => isOpen(portsMap, port));
+  const recommendedActions = [];
+
+  unprotectedDstNatRules.forEach((rule) => {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'Port forwarding is incomplete',
+        cause: `NAT rule exists for ${rule.protocol.toUpperCase()} ${rule.dstPort} but no matching forward accept rule was found.`,
+        impact: 'Traffic is translated but dropped by firewall, making the published service unreachable.',
+        solution: 'Add matching forward filter allow rule for the forwarded protocol/port.',
+        mikrotikCommands: [allowForwardByProtocolAndPort(rule.protocol, rule.dstPort)],
+        severity: 'problem',
+      })
+    );
+  });
+
+  const hasGenericSipIncomplete = unprotectedDstNatRules.some((rule) => rule.protocol === 'udp' && /(5060|5061)/.test(rule.dstPort));
+
+  if (hasSipDstNat && sipPortBlocked && !firewallHasSipAllow && !hasGenericSipIncomplete) {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'Port forwarding is incomplete',
+        cause: 'NAT is configured but a matching forward firewall allow rule is missing.',
+        impact: 'Service is unreachable from outside even though traffic is translated.',
+        solution: 'Add a firewall accept rule for forwarded SIP traffic.',
+        mikrotikCommands: [allowSip5060Command],
+        severity: 'problem',
+      })
+    );
+  }
+
+  const closedCriticalPorts = [5060, 80, 443, 8291].filter((port) => isClosed(portsMap, port));
+  closedCriticalPorts.forEach((port) => {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'Required port is closed',
+        cause: `Port ${port} is blocked by current firewall/NAT path from the probe point.`,
+        impact: 'Service depending on that port (VoIP/Web/management) will fail for remote clients.',
+        solution: `Open port ${port} in firewall and ensure NAT is configured when publishing an internal service.`,
+        mikrotikCommands: [allowByPortCommand(port)],
+        severity: 'warning',
+      })
+    );
+  });
+
+  if (mikrotikSnapshot?.enabled && !hasSrcNat) {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'No src-nat rule for public IP',
+        cause: 'No matching source NAT rule was detected in MikroTik NAT table.',
+        impact: 'Outgoing traffic may not use the required fixed public IP.',
+        solution: 'Create a src-nat rule for the intended WAN interface and public IP.',
+        mikrotikCommands: [addSrcNatCommand],
+        severity: 'problem',
+      })
+    );
+  }
+
+  const dhcpMismatch = mikrotikSnapshot?.enabled && (!mikrotikSnapshot?.analysis?.lan?.hasDhcpNetwork || !mikrotikSnapshot?.analysis?.lan?.hasDhcpPool);
+  if (dhcpMismatch) {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'DHCP configuration does not match network',
+        cause: 'DHCP network and/or DHCP pool entries are missing or inconsistent with LAN state.',
+        impact: 'Clients may fail to receive valid IP settings, causing intermittent connectivity.',
+        solution: 'Update DHCP pool and DHCP network definitions to match the LAN gateway/subnet.',
+        mikrotikCommands: [fixDhcpMismatchCommand],
+        severity: 'warning',
+      })
+    );
+  }
 
   if (insecurePorts.length > 0) {
     return {
@@ -110,6 +220,17 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 94,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Insecure services are exposed',
+          cause: 'Legacy plaintext protocols are open to the network.',
+          impact: 'Credential leakage and interception risk increase significantly.',
+          solution: 'Disable insecure services and keep only secured management paths.',
+          mikrotikCommands: [disableTelnetCommand, disableFtpCommand],
+          severity: 'problem',
+        })
+      ),
       target,
     };
   }
@@ -146,11 +267,22 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 88,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Winbox management is exposed',
+          cause: 'Port 8291 is reachable beyond trusted management scope.',
+          impact: 'Router management plane is exposed to brute-force and unauthorized access risk.',
+          solution: 'Restrict Winbox to trusted management subnet/IP list.',
+          mikrotikCommands: [restrictWinboxCommand],
+          severity: 'warning',
+        })
+      ),
       target,
     };
   }
 
-  if (expectsSipService && sipPortBlocked) {
+  if (sipExpected && sipPortBlocked) {
     return {
       issue: 'SIP signaling unreachable while expected',
       explanation: 'SIP service is expected but UDP 5060 is closed from the probe source.',
@@ -182,6 +314,17 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 90,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Required port is closed',
+          cause: 'Expected SIP signaling port 5060 is not reachable.',
+          impact: 'VoIP registration and inbound/outbound call setup may fail.',
+          solution: 'Allow UDP 5060 in firewall and verify dst-nat to PBX.',
+          mikrotikCommands: [openSipFirewallCommand],
+          severity: 'problem',
+        })
+      ),
       target,
     };
   }
@@ -218,11 +361,22 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 98,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Required port is closed',
+          cause: 'Firewall policy has an explicit block for SIP signaling.',
+          impact: 'Inbound VoIP signaling cannot reach PBX/trunk endpoint.',
+          solution: 'Place explicit allow rule for UDP 5060 before blocking rules.',
+          mikrotikCommands: [allowSip5060Command],
+          severity: 'problem',
+        })
+      ),
       target,
     };
   }
 
-  if (!hasSipDstNat) {
+  if (sipExpected && mikrotikSnapshot?.enabled && !hasSipDstNat) {
     return {
       issue: 'Missing SIP dst-nat rule',
       explanation: 'MikroTik NAT table does not include dst-nat for SIP 5060.',
@@ -254,6 +408,17 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 95,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Port forwarding is incomplete',
+          cause: 'No dst-nat rule exists for SIP 5060 on MikroTik.',
+          impact: 'Service remains unreachable from outside despite WAN reachability.',
+          solution: 'Create SIP dst-nat to the internal PBX host.',
+          mikrotikCommands: [addSipDstNatCommand],
+          severity: 'problem',
+        })
+      ),
       target,
     };
   }
@@ -305,11 +470,22 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 84,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'Required media ports are blocked',
+          cause: 'RTP range is blocked or not explicitly allowed in firewall.',
+          impact: 'Calls connect but audio may be one-way or absent.',
+          solution: 'Allow UDP 10000-20000 and validate bidirectional media flow.',
+          mikrotikCommands: [allowRtpCommand],
+          severity: 'warning',
+        })
+      ),
       target,
     };
   }
 
-  if (!hasRtpDstNat || !hasSrcNat) {
+  if (mikrotikSnapshot?.enabled && (!hasRtpDstNat || !hasSrcNat)) {
     return {
       issue: 'Possible NAT issue affecting RTP',
       explanation: 'NAT policy does not fully support RTP media traversal.',
@@ -355,11 +531,42 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
           confidenceScore: 87,
         },
       ],
+      recommendedActions: withFallbackActions(
+        recommendedActions,
+        buildDiagnosisEntry({
+          problem: 'NAT policy is incomplete for media traffic',
+          cause: !hasRtpDstNat ? 'RTP dst-nat rule is missing.' : 'Required src-nat/masquerade is missing.',
+          impact: 'Voice media path may be unstable, one-way, or unavailable.',
+          solution: 'Add missing NAT rule(s) and retest live calls.',
+          mikrotikCommands: [
+            ...(!hasRtpDstNat ? [addRtpDstNatCommand] : []),
+            ...(!hasSrcNat ? [addSrcNatCommand] : []),
+          ],
+          severity: 'warning',
+        })
+      ),
       target,
     };
   }
 
-  return buildNoActionPayload(target);
+  if (recommendedActions.length === 0) {
+    recommendedActions.push(
+      buildDiagnosisEntry({
+        problem: 'No critical configuration issue detected',
+        cause: 'Current probe and MikroTik snapshot do not indicate a direct outage condition.',
+        impact: 'Service continuity appears stable from this observation point.',
+        solution: 'Keep monitoring and apply hardening recommendations.',
+        mikrotikCommands: [restrictWinboxCommand, disableTelnetCommand],
+        severity: 'ok',
+      })
+    );
+  }
+
+  const healthy = buildNoActionPayload(target);
+  return {
+    ...healthy,
+    recommendedActions,
+  };
 };
 
 module.exports = {

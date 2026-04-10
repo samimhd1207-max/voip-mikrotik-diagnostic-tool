@@ -3,7 +3,11 @@ const { pingTarget } = require('../network/ping.service');
 const { resolveDns } = require('../network/dns.service');
 const { checkPorts, DEFAULT_PORTS } = require('../network/port.service');
 const { buildAnalysis } = require('./analysis.service');
-const { fetchMikrotikSnapshot } = require('../mikrotik/mikrotik.service');
+const mikrotikService = require('../mikrotik/mikrotik.service');
+const fetchMikrotikSnapshot =
+  mikrotikService.fetchMikrotikSnapshot ||
+  mikrotikService.fetchMikroTikSnapshot ||
+  mikrotikService.fetchMikrotikSnapShot;
 const NAT_PORT_PATTERN = /dst-port=([\d,-]+)/ig;
 
 const expandPortToken = (token) => {
@@ -80,7 +84,12 @@ const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrot
       }
     ),
     runSafely(
-      () => fetchMikrotikSnapshot(mikrotik),
+      () => {
+        if (typeof fetchMikrotikSnapshot !== 'function') {
+          throw new Error('MikroTik snapshot function is unavailable (export mismatch).');
+        }
+        return fetchMikrotikSnapshot(mikrotik);
+      },
       {
         enabled: false,
         reason: 'MikroTik snapshot failed unexpectedly.',
@@ -115,6 +124,7 @@ const runDiagnostics = async ({ target, ports, expectsSipService = false, mikrot
   const dnsHealthy = dns.applicable === false || dns.success;
   const status = ping.success && dnsHealthy && portCheck.success ? 'healthy' : 'degraded';
 
+  // Keep analysis engine integration without blocking primary response format.
   const analysis = buildAnalysis({
     target,
     ping,
