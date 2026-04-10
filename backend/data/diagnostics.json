@@ -9158,5 +9158,2964 @@
       ],
       "target": "192.168.216.186"
     }
+  },
+  {
+    "id": "0f98e546-1aab-4077-88f0-fb9a74ae7f21",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T06:57:29.108Z",
+    "finishedAt": "2026-04-09T06:57:31.697Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T06:57:29.108Z",
+        "finishedAt": "2026-04-09T06:57:29.190Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T06:57:29.133Z",
+        "finishedAt": "2026-04-09T06:57:29.133Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2038,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2038,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2038,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2038,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2038,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2038,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2053,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2053,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T06:57:29.191Z",
+        "finishedAt": "2026-04-09T06:57:31.696Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "0e917701-bccd-42af-8545-11f1d2dcef63",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T06:58:39.018Z",
+    "finishedAt": "2026-04-09T06:58:41.630Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T06:58:39.019Z",
+        "finishedAt": "2026-04-09T06:58:39.118Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T06:58:39.055Z",
+        "finishedAt": "2026-04-09T06:58:39.055Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2059,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2059,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2509,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2509,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2509,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2509,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2058,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2058,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2042,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2042,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2042,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2042,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2058,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2058,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T06:58:39.118Z",
+        "finishedAt": "2026-04-09T06:58:41.629Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "c7e25826-ecb4-4bca-9ed5-af21f5f17872",
+    "target": "192.168.216.236",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T06:59:03.300Z",
+    "finishedAt": "2026-04-09T06:59:05.443Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-09T06:59:03.301Z",
+        "finishedAt": "2026-04-09T06:59:03.383Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-09T06:59:03.327Z",
+        "finishedAt": "2026-04-09T06:59:03.327Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "open",
+            "service": "http",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2052,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2052,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:open, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T06:59:03.384Z",
+        "finishedAt": "2026-04-09T06:59:05.441Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "2a77f46e-97fb-4d57-a9cb-fb77f09df20a",
+    "target": "google.com",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T06:59:17.804Z",
+    "finishedAt": "2026-04-09T06:59:20.472Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 26,
+        "rawOutput": "Envoi d'une requ�te 'ping' sur google.com [172.217.22.142] avec 32 octets de donn�es�:\r\nR�ponse de 172.217.22.142�: octets=32 temps=26 ms TTL=114\r\n\r\nStatistiques Ping pour 172.217.22.142:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 26ms, Maximum = 26ms, Moyenne = 26ms",
+        "ok": true,
+        "latencyMs": 26,
+        "target": "google.com",
+        "startedAt": "2026-04-09T06:59:17.804Z",
+        "finishedAt": "2026-04-09T06:59:17.947Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": true,
+        "status": "resolved",
+        "records": {
+          "ipv4": [
+            "172.217.22.142"
+          ],
+          "ipv6": [
+            "2a00:1450:4007:81b::200e"
+          ]
+        },
+        "errors": {
+          "ipv4": null,
+          "ipv6": null
+        },
+        "rawOutput": "A=172.217.22.142 AAAA=2a00:1450:4007:81b::200e",
+        "ok": true,
+        "skipped": false,
+        "target": "google.com",
+        "startedAt": "2026-04-09T06:59:17.833Z",
+        "finishedAt": "2026-04-09T06:59:17.876Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "google.com",
+        "ports": [
+          {
+            "port": 21,
+            "state": "closed",
+            "service": "ftp",
+            "responseTime": 2519,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2519,
+            "error": "timeout"
+          },
+          {
+            "port": 22,
+            "state": "closed",
+            "service": "ssh",
+            "responseTime": 2518,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2518,
+            "error": "timeout"
+          },
+          {
+            "port": 23,
+            "state": "closed",
+            "service": "telnet",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2518,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2518,
+            "error": "timeout"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2518,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2518,
+            "error": "timeout"
+          },
+          {
+            "port": 80,
+            "state": "open",
+            "service": "http",
+            "responseTime": 36,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 36,
+            "error": null
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "state": "open",
+            "service": "https",
+            "responseTime": 37,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 37,
+            "error": null
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2518,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2518,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2518,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2518,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "state": "closed",
+            "service": "mikrotik",
+            "responseTime": 2517,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2517,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "21:closed, 22:closed, 23:closed, 25:closed, 53:closed, 80:open, 110:closed, 143:closed, 443:open, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:closed",
+        "ok": false,
+        "startedAt": "2026-04-09T06:59:17.948Z",
+        "finishedAt": "2026-04-09T06:59:20.470Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "google.com"
+    }
+  },
+  {
+    "id": "3eb07f69-8dfb-4e25-8172-703f55203d0f",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": true,
+    "status": "healthy",
+    "startedAt": "2026-04-09T07:00:22.363Z",
+    "finishedAt": "2026-04-09T07:00:25.461Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T07:00:22.364Z",
+        "finishedAt": "2026-04-09T07:00:22.448Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T07:00:22.390Z",
+        "finishedAt": "2026-04-09T07:00:22.390Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2506,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2506,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2054,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2054,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T07:00:22.951Z",
+        "finishedAt": "2026-04-09T07:00:25.458Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": true,
+        "firewallRaw": "",
+        "natRaw": "0 chain=srcnat action=masquerade out-interface-list=WAN log=no log-prefix=\r\n1 chain=dstnat action=dst-nat to-addresses=192.168.30.107 protocol=tcp dst-address=192.168.216.186 dst-port=80,443 log=no log-prefix=",
+        "interfacesRaw": "0 R  name=ether1 default-name=ether1 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:54 last-link-up-time=2026-04-07 06:04:05 link-downs=0\r\n 1  S name=ether2 default-name=ether2 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:55 link-downs=0\r\n 2 RS name=ether3 default-name=ether3 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:56 last-link-up-time=2026-04-07 06:04:07 link-downs=0\r\n 3  S name=ether4 default-name=ether4 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:57 link-downs=0\r\n 4  S name=ether5 default-name=ether5 type=ether mtu=1500 actual-mtu=1500 l2mtu=1598 max-l2mtu=9214 mac-address=D4:01:C3:FA:38:58 link-downs=0\r\n 5  S name=wlan1 default-name=wlan1 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:59 last-link-down-time=2026-04-08 17:07:08 last-link-up-time=2026-04-08 08:05:08 link-downs=2\r\n 6 RS name=wlan2 default-name=wlan2 type=wlan mtu=1500 actual-mtu=1500 l2mtu=1600 max-l2mtu=2290 mac-address=D4:01:C3:FA:38:5A last-link-up-time=2026-04-07 08:07:20 link-downs=0\r\n 7 R  name=VLAN10 type=vlan mtu=1500 actual-mtu=1500 l2mtu=1594 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 8 R  name=bridge1 type=bridge mtu=auto actual-mtu=1500 l2mtu=1598 mac-address=D4:01:C3:FA:38:59 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n 9 R  name=lo type=loopback mtu=65536 actual-mtu=65536 mac-address=00:00:00:00:00:00 last-link-up-time=2026-04-07 06:03:59 link-downs=0\r\n10    comment=sim not present name=lte1 default-name=lte1 type=lte mtu=1500 actual-mtu=1500 mac-address=66:8C:1A:00:18:01 link-downs=0",
+        "analysis": {
+          "firewall": {
+            "blocked": false,
+            "matchingRule": null,
+            "hasRtpAllowRule": false,
+            "hasRtpBlockRule": false,
+            "matchingRtpAllowRule": null,
+            "matchingRtpBlockRule": null
+          },
+          "nat": {
+            "hasSipDstNat": false,
+            "hasRtpDstNat": false,
+            "hasSrcNat": true,
+            "matchingSipDstNatRule": null,
+            "matchingRtpDstNatRule": null
+          }
+        }
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "No issue detected",
+      "explanation": "No blocking condition requiring MikroTik change was detected from current probes.",
+      "context": "SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.",
+      "cause": "No actionable MikroTik fault detected.",
+      "solution": "No action required",
+      "mikrotikCommands": [],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "No actionable MikroTik fault detected.",
+        "recommendedAction": "No action required",
+        "mikrotikChecks": [
+          "No blocking firewall/NAT signal found in current dataset."
+        ],
+        "routerOsCommand": "N/A",
+        "routerOsCommands": [],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "No actionable MikroTik fault detected.",
+          "recommendedAction": "No action required",
+          "evidence": [
+            "No blocking firewall/NAT signal found in current dataset."
+          ],
+          "routerOsCommands": [],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "5097efa8-25ee-475d-a3cd-e32122d7d3e2",
+    "target": "192.168.216.236",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T07:20:15.826Z",
+    "finishedAt": "2026-04-09T07:20:17.977Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 2,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.236 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.236�: octets=32 temps=2 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.236:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 2ms, Maximum = 2ms, Moyenne = 2ms",
+        "ok": true,
+        "latencyMs": 2,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-09T07:20:15.826Z",
+        "finishedAt": "2026-04-09T07:20:15.900Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.236",
+        "startedAt": "2026-04-09T07:20:15.856Z",
+        "finishedAt": "2026-04-09T07:20:15.856Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.236",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2073,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2073,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "open",
+            "service": "http",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2073,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2073,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2057,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2057,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2056,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2056,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2055,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2055,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:open, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T07:20:15.900Z",
+        "finishedAt": "2026-04-09T07:20:17.975Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.236"
+    }
+  },
+  {
+    "id": "fa05ed9c-d4af-4841-a096-de90cd238daf",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T07:22:16.039Z",
+    "finishedAt": "2026-04-09T07:22:18.617Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T07:22:16.039Z",
+        "finishedAt": "2026-04-09T07:22:16.107Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T07:22:16.064Z",
+        "finishedAt": "2026-04-09T07:22:16.064Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2071,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2071,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2071,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2071,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2506,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2506,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2070,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2070,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2069,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2069,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2070,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2070,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2070,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2070,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T07:22:16.107Z",
+        "finishedAt": "2026-04-09T07:22:18.615Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "5f06e9dd-9a7e-455f-a0bb-d0fe93be7d02",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T08:59:07.247Z",
+    "finishedAt": "2026-04-09T08:59:09.837Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T08:59:07.248Z",
+        "finishedAt": "2026-04-09T08:59:07.326Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T08:59:07.275Z",
+        "finishedAt": "2026-04-09T08:59:07.275Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 12,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 12,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 11,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 11,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 11,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 11,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2069,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2069,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2069,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2069,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2068,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2068,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2068,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2067,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2067,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2068,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2068,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2068,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 10,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 10,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T08:59:07.327Z",
+        "finishedAt": "2026-04-09T08:59:09.835Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik connection not configured."
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "b5ad6713-f85b-467b-9393-74838dd1ddbc",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T13:44:49.172Z",
+    "finishedAt": "2026-04-09T13:44:51.783Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 0,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps<1ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 0ms, Maximum = 0ms, Moyenne = 0ms",
+        "ok": true,
+        "latencyMs": 0,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T13:44:49.173Z",
+        "finishedAt": "2026-04-09T13:44:49.261Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T13:44:49.198Z",
+        "finishedAt": "2026-04-09T13:44:49.198Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 8,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 8,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 7,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 7,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2033,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2033,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2032,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2032,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2512,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2512,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2045,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2045,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2513,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2513,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2032,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2032,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2032,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2032,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2032,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2032,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2032,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2032,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T13:44:49.263Z",
+        "finishedAt": "2026-04-09T13:44:51.779Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik snapshot failed unexpectedly.",
+        "error": "fetchMikrotikSnapshot is not a function",
+        "finishedAt": "2026-04-09T13:44:49.199Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "395cc527-c59e-4d29-adbc-f7f49a4d4796",
+    "target": "192.168.216.186",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "healthy",
+    "startedAt": "2026-04-09T13:59:47.875Z",
+    "finishedAt": "2026-04-09T13:59:50.463Z",
+    "results": {
+      "ping": {
+        "success": true,
+        "latency": 1,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  192.168.216.186 avec 32 octets de donn�es�:\r\nR�ponse de 192.168.216.186�: octets=32 temps=1 ms TTL=64\r\n\r\nStatistiques Ping pour 192.168.216.186:\r\n    Paquets�: envoy�s = 1, re�us = 1, perdus = 0 (perte 0%),\r\nDur�e approximative des boucles en millisecondes :\r\n    Minimum = 1ms, Maximum = 1ms, Moyenne = 1ms",
+        "ok": true,
+        "latencyMs": 1,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T13:59:47.876Z",
+        "finishedAt": "2026-04-09T13:59:47.941Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "192.168.216.186",
+        "startedAt": "2026-04-09T13:59:47.899Z",
+        "finishedAt": "2026-04-09T13:59:47.899Z"
+      },
+      "ports": {
+        "success": true,
+        "target": "192.168.216.186",
+        "ports": [
+          {
+            "port": 21,
+            "state": "open",
+            "service": "ftp",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 22,
+            "state": "open",
+            "service": "ssh",
+            "responseTime": 6,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 6,
+            "error": null
+          },
+          {
+            "port": 23,
+            "state": "open",
+            "service": "telnet",
+            "responseTime": 5,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2515,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2515,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2516,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2516,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2034,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2034,
+            "error": "ECONNREFUSED"
+          },
+          {
+            "port": 8291,
+            "state": "open",
+            "service": "mikrotik",
+            "responseTime": 5,
+            "success": true,
+            "open": true,
+            "responseTimeMs": 5,
+            "error": null
+          }
+        ],
+        "rawOutput": "21:open, 22:open, 23:open, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:open",
+        "ok": false,
+        "startedAt": "2026-04-09T13:59:47.942Z",
+        "finishedAt": "2026-04-09T13:59:50.460Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik snapshot failed unexpectedly.",
+        "error": "fetchMikrotikSnapshot is not a function",
+        "finishedAt": "2026-04-09T13:59:47.900Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": true
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": true
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "192.168.216.186"
+    }
+  },
+  {
+    "id": "319ed5b4-0858-4f72-8ddc-c6a5b62c2d2b",
+    "target": "100.67.254.13",
+    "ports": [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      445,
+      3389,
+      5060,
+      5061,
+      8291
+    ],
+    "expectsSipService": false,
+    "mikrotikConfigured": false,
+    "status": "degraded",
+    "startedAt": "2026-04-09T15:20:42.378Z",
+    "finishedAt": "2026-04-09T15:20:48.823Z",
+    "results": {
+      "ping": {
+        "success": false,
+        "latency": null,
+        "rawOutput": "Envoi d'une requ�te 'Ping'  100.67.254.13 avec 32 octets de donn�es�:\r\nD�lai d'attente de la demande d�pass�.\r\n\r\nStatistiques Ping pour 100.67.254.13:\r\n    Paquets�: envoy�s = 1, re�us = 0, perdus = 1 (perte 100%),\r\nCommand failed: ping -n 1 100.67.254.13",
+        "ok": false,
+        "latencyMs": null,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-09T15:20:42.378Z",
+        "finishedAt": "2026-04-09T15:20:46.311Z"
+      },
+      "dns": {
+        "success": true,
+        "applicable": false,
+        "status": "not_applicable",
+        "reason": "DNS check not applicable for direct IP target.",
+        "records": {
+          "ipv4": [],
+          "ipv6": []
+        },
+        "rawOutput": "IP target provided, DNS resolution skipped.",
+        "ok": true,
+        "skipped": true,
+        "target": "100.67.254.13",
+        "startedAt": "2026-04-09T15:20:42.404Z",
+        "finishedAt": "2026-04-09T15:20:42.404Z"
+      },
+      "ports": {
+        "success": false,
+        "target": "100.67.254.13",
+        "ports": [
+          {
+            "port": 21,
+            "state": "closed",
+            "service": "ftp",
+            "responseTime": 2507,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2507,
+            "error": "timeout"
+          },
+          {
+            "port": 22,
+            "state": "closed",
+            "service": "ssh",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 23,
+            "state": "closed",
+            "service": "telnet",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 25,
+            "state": "closed",
+            "service": "smtp",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 53,
+            "state": "closed",
+            "service": "dns",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 80,
+            "state": "closed",
+            "service": "http",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 110,
+            "state": "closed",
+            "service": "pop3",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 143,
+            "state": "closed",
+            "service": "imap",
+            "responseTime": 2505,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2505,
+            "error": "timeout"
+          },
+          {
+            "port": 443,
+            "state": "closed",
+            "service": "https",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 445,
+            "state": "closed",
+            "service": "smb",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 3389,
+            "state": "closed",
+            "service": "rdp",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 5060,
+            "state": "closed",
+            "service": "sip",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 5061,
+            "state": "closed",
+            "service": "sips",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          },
+          {
+            "port": 8291,
+            "state": "closed",
+            "service": "mikrotik",
+            "responseTime": 2504,
+            "success": false,
+            "open": false,
+            "responseTimeMs": 2504,
+            "error": "timeout"
+          }
+        ],
+        "rawOutput": "21:closed, 22:closed, 23:closed, 25:closed, 53:closed, 80:closed, 110:closed, 143:closed, 443:closed, 445:closed, 3389:closed, 5060:closed, 5061:closed, 8291:closed",
+        "ok": false,
+        "startedAt": "2026-04-09T15:20:46.313Z",
+        "finishedAt": "2026-04-09T15:20:48.821Z",
+        "scannedCount": 14
+      },
+      "mikrotik": {
+        "enabled": false,
+        "reason": "MikroTik snapshot failed unexpectedly.",
+        "error": "fetchMikrotikSnapshot is not a function",
+        "finishedAt": "2026-04-09T15:20:42.404Z"
+      }
+    },
+    "checks": [
+      {
+        "key": "ping",
+        "ok": false
+      },
+      {
+        "key": "dns",
+        "ok": true
+      },
+      {
+        "key": "ports",
+        "ok": false
+      }
+    ],
+    "analysis": {
+      "issue": "Healthy baseline with hardening opportunities",
+      "explanation": "Core connectivity checks are healthy, with no outage signature detected.",
+      "context": "Even healthy systems should reduce attack surface and restrict management exposure.",
+      "cause": "No critical service failure detected, but security posture can be improved.",
+      "solution": "Restrict management plane and disable unused legacy services.",
+      "mikrotikCommands": [
+        "/ip service set winbox address=192.168.0.0/24",
+        "/ip service disable telnet",
+        "/ip service disable ftp"
+      ],
+      "overallStatus": "healthy",
+      "confidence": 35,
+      "confidenceScore": 35,
+      "primaryFinding": {
+        "rule": "no_action_required",
+        "probableCause": "System is healthy but security can be improved by restricting open ports.",
+        "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+        "mikrotikChecks": [
+          "No outage detected in ping/DNS/port baselines.",
+          "Hardening actions are recommended."
+        ],
+        "routerOsCommand": "/ip service set winbox address=192.168.0.0/24",
+        "routerOsCommands": [
+          "/ip service set winbox address=192.168.0.0/24",
+          "/ip service disable telnet",
+          "/ip service disable ftp"
+        ],
+        "confidence": 35,
+        "confidenceScore": 35
+      },
+      "findings": [
+        {
+          "rule": "no_action_required",
+          "probableCause": "System is healthy but security can be improved by restricting open ports.",
+          "recommendedAction": "Apply management restrictions and disable legacy plaintext services.",
+          "evidence": [
+            "No critical failure detected; optimization/hardening path identified."
+          ],
+          "routerOsCommands": [
+            "/ip service set winbox address=192.168.0.0/24",
+            "/ip service disable telnet",
+            "/ip service disable ftp"
+          ],
+          "confidence": 35,
+          "confidenceScore": 35
+        }
+      ],
+      "target": "100.67.254.13"
+    }
   }
 ]

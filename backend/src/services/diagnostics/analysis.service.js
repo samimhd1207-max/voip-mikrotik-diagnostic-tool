@@ -1,4 +1,5 @@
 const isClosed = (portsMap, port) => portsMap.get(port)?.open === false;
+const isOpen = (portsMap, port) => portsMap.get(port)?.open === true;
 const looksVoipRelatedTarget = (target) => /\b(sip|voip|pbx|asterisk|trunk|softswitch)\b/i.test(target);
 
 const allowSip5060Command =
@@ -12,34 +13,42 @@ const addSrcNatCommand =
   '/ip firewall nat add chain=srcnat out-interface-list=WAN action=masquerade comment="VoIP src-nat"';
 const allowRtpCommand =
   '/ip firewall filter add chain=forward protocol=udp dst-port=10000-20000 action=accept comment="Allow RTP"';
+const restrictWinboxCommand =
+  '/ip service set winbox address=192.168.0.0/24';
+const disableTelnetCommand =
+  '/ip service disable telnet';
+const disableFtpCommand =
+  '/ip service disable ftp';
+const openSipFirewallCommand =
+  '/ip firewall filter add chain=forward protocol=udp dst-port=5060 action=accept comment="Allow SIP signaling"';
 
 const buildNoActionPayload = (target) => ({
-  issue: 'No issue detected',
-  explanation: 'No blocking condition requiring MikroTik change was detected from current probes.',
-  context: 'SIP signaling path does not show a definitive firewall/NAT fault from available telemetry.',
-  cause: 'No actionable MikroTik fault detected.',
-  solution: 'No action required',
-  mikrotikCommands: [],
+  issue: 'Healthy baseline with hardening opportunities',
+  explanation: 'Core connectivity checks are healthy, with no outage signature detected.',
+  context: 'Even healthy systems should reduce attack surface and restrict management exposure.',
+  cause: 'No critical service failure detected, but security posture can be improved.',
+  solution: 'Restrict management plane and disable unused legacy services.',
+  mikrotikCommands: [restrictWinboxCommand, disableTelnetCommand, disableFtpCommand],
   overallStatus: 'healthy',
   confidence: 35,
   confidenceScore: 35,
   primaryFinding: {
     rule: 'no_action_required',
-    probableCause: 'No actionable MikroTik fault detected.',
-    recommendedAction: 'No action required',
-    mikrotikChecks: ['No blocking firewall/NAT signal found in current dataset.'],
-    routerOsCommand: 'N/A',
-    routerOsCommands: [],
+    probableCause: 'System is healthy but security can be improved by restricting open ports.',
+    recommendedAction: 'Apply management restrictions and disable legacy plaintext services.',
+    mikrotikChecks: ['No outage detected in ping/DNS/port baselines.', 'Hardening actions are recommended.'],
+    routerOsCommand: restrictWinboxCommand,
+    routerOsCommands: [restrictWinboxCommand, disableTelnetCommand, disableFtpCommand],
     confidence: 35,
     confidenceScore: 35,
   },
   findings: [
     {
       rule: 'no_action_required',
-      probableCause: 'No actionable MikroTik fault detected.',
-      recommendedAction: 'No action required',
-      evidence: ['No blocking firewall/NAT signal found in current dataset.'],
-      routerOsCommands: [],
+      probableCause: 'System is healthy but security can be improved by restricting open ports.',
+      recommendedAction: 'Apply management restrictions and disable legacy plaintext services.',
+      evidence: ['No critical failure detected; optimization/hardening path identified.'],
+      routerOsCommands: [restrictWinboxCommand, disableTelnetCommand, disableFtpCommand],
       confidence: 35,
       confidenceScore: 35,
     },
@@ -67,6 +76,115 @@ const buildAnalysis = ({ target, ping, portCheck, expectsSipService = false, mik
 
   const testedRtpPorts = ports.filter((item) => item.port >= 10000 && item.port <= 20000);
   const noRtpPortOpen = testedRtpPorts.length > 0 && testedRtpPorts.every((item) => item.open === false);
+  const insecurePorts = [21, 23, 25, 110].filter((port) => isOpen(portsMap, port));
+
+  if (insecurePorts.length > 0) {
+    return {
+      issue: 'Insecure services exposed',
+      explanation: `Insecure plaintext services are reachable: ${insecurePorts.join(', ')}.`,
+      context: 'Legacy protocols expose credentials and metadata to interception risks.',
+      cause: 'Unsecured protocols are open on the network.',
+      solution: 'Disable or strictly restrict insecure services and migrate to secure alternatives.',
+      mikrotikCommands: [disableTelnetCommand, disableFtpCommand],
+      overallStatus: 'attention_required',
+      confidence: 94,
+      confidenceScore: 94,
+      primaryFinding: {
+        rule: 'insecure_services_exposed',
+        probableCause: 'Unsecured protocols are open on the network.',
+        recommendedAction: 'Disable FTP/Telnet and restrict SMTP/POP3 to trusted sources only.',
+        mikrotikChecks: [`Open insecure ports detected: ${insecurePorts.join(', ')}`],
+        routerOsCommand: disableTelnetCommand,
+        routerOsCommands: [disableTelnetCommand, disableFtpCommand],
+        confidence: 94,
+        confidenceScore: 94,
+      },
+      findings: [
+        {
+          rule: 'insecure_services_exposed',
+          probableCause: 'Unsecured protocols are open on the network.',
+          recommendedAction: 'Disable FTP/Telnet and restrict SMTP/POP3 to trusted sources only.',
+          evidence: [`Detected open insecure ports: ${insecurePorts.join(', ')}.`],
+          routerOsCommands: [disableTelnetCommand, disableFtpCommand],
+          confidence: 94,
+          confidenceScore: 94,
+        },
+      ],
+      target,
+    };
+  }
+
+  if (isOpen(portsMap, 8291)) {
+    return {
+      issue: 'Winbox management port exposed',
+      explanation: 'Winbox port 8291 is reachable from the probe source.',
+      context: 'If this probe source is WAN or untrusted segment, this is a management-plane exposure.',
+      cause: 'MikroTik management access is broadly reachable.',
+      solution: 'Restrict Winbox access to trusted management subnet(s).',
+      mikrotikCommands: [restrictWinboxCommand],
+      overallStatus: 'attention_required',
+      confidence: 88,
+      confidenceScore: 88,
+      primaryFinding: {
+        rule: 'winbox_exposed',
+        probableCause: 'MikroTik management access is broadly reachable.',
+        recommendedAction: 'Restrict Winbox by source subnet/IP allowlist.',
+        mikrotikChecks: ['Port 8291 reachable from probe source.'],
+        routerOsCommand: restrictWinboxCommand,
+        routerOsCommands: [restrictWinboxCommand],
+        confidence: 88,
+        confidenceScore: 88,
+      },
+      findings: [
+        {
+          rule: 'winbox_exposed',
+          probableCause: 'MikroTik management access is broadly reachable.',
+          recommendedAction: 'Restrict Winbox by source subnet/IP allowlist.',
+          evidence: ['Port 8291 open on target.'],
+          routerOsCommands: [restrictWinboxCommand],
+          confidence: 88,
+          confidenceScore: 88,
+        },
+      ],
+      target,
+    };
+  }
+
+  if (expectsSipService && sipPortBlocked) {
+    return {
+      issue: 'SIP signaling unreachable while expected',
+      explanation: 'SIP service is expected but UDP 5060 is closed from the probe source.',
+      context: 'Inbound registration/call setup can fail when signaling cannot reach PBX edge.',
+      cause: 'Firewall does not allow SIP signaling path.',
+      solution: 'Open SIP signaling rule for UDP 5060 in forward path.',
+      mikrotikCommands: [openSipFirewallCommand],
+      overallStatus: 'attention_required',
+      confidence: 90,
+      confidenceScore: 90,
+      primaryFinding: {
+        rule: 'sip_expected_but_closed',
+        probableCause: 'Firewall blocks expected SIP signaling.',
+        recommendedAction: 'Add explicit allow rule for UDP 5060.',
+        mikrotikChecks: ['expectsSipService=true and port 5060 observed closed.'],
+        routerOsCommand: openSipFirewallCommand,
+        routerOsCommands: [openSipFirewallCommand],
+        confidence: 90,
+        confidenceScore: 90,
+      },
+      findings: [
+        {
+          rule: 'sip_expected_but_closed',
+          probableCause: 'Firewall blocks expected SIP signaling.',
+          recommendedAction: 'Add explicit allow rule for UDP 5060.',
+          evidence: ['SIP expected by input contract, but port 5060 is closed.'],
+          routerOsCommands: [openSipFirewallCommand],
+          confidence: 90,
+          confidenceScore: 90,
+        },
+      ],
+      target,
+    };
+  }
 
   if (sipPortBlocked && firewallBlocksSip) {
     return {

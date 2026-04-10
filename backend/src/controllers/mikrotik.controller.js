@@ -1,0 +1,55 @@
+const {
+  applyPortForwarding,
+  applyStaticPublicIp,
+  applyLanNetworkChange,
+} = require('../services/mikrotik/mikrotik.service');
+
+const applyMikrotikPortForward = async (req, res, next) => {
+  try {
+    const { mikrotik, config } = req.body;
+    const payload = await applyPortForwarding({ mikrotik, config });
+
+    res.status(200).json({
+      success: true,
+      commands: payload.commands,
+      skipped: payload.skipped,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const applyMikrotikStaticIp = async (req, res, next) => {
+  try {
+    const { mikrotik, config } = req.body;
+    const payload = await applyStaticPublicIp({ mikrotik, config });
+
+    res.status(200).json({
+      success: true,
+      commands: payload.commands,
+      skipped: payload.skipped,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const applyMikrotikLanNetworkChange = async (req, res, next) => {
+  try {
+    const { mikrotik, config } = req.body;
+    const payload = await applyLanNetworkChange({ mikrotik, config });
+
+    res.status(200).json({
+      success: true,
+      commands: payload.commands,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  applyMikrotikPortForward,
+  applyMikrotikStaticIp,
+  applyMikrotikLanNetworkChange,
+};

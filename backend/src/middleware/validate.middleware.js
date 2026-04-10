@@ -1,66 +1,67 @@
 const HttpError = require('../utils/http-error');
 
 const ipv4Regex = /^(25[0-5]|2[0-4]\d|1?\d?\d)(\.(25[0-5]|2[0-4]\d|1?\d?\d)){3}$/;
+const cidrRegex = /^(25[0-5]|2[0-4]\d|1?\d?\d)(\.(25[0-5]|2[0-4]\d|1?\d?\d)){3}\/(3[0-2]|[12]?\d)$/;
 const hostnameRegex = /^(?=.{1,253}$)(?:(?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+(?:[a-zA-Z]{2,63})$/;
 
 const isValidTarget = (value) => ipv4Regex.test(value) || hostnameRegex.test(value) || value === 'localhost';
+const ipToInt = (ip) => ip.split('.').map(Number).reduce((acc, octet) => (acc << 8) + octet, 0) >>> 0;
+
+const validatePortValue = (value, field) => {
+  if (!Number.isInteger(value) || value < 1 || value > 65535) {
+    throw new HttpError(400, `${field} must be an integer between 1 and 65535.`, { field });
+  }
+};
+
+const validateMikrotikCredentials = (mikrotik) => {
+  if (!mikrotik || typeof mikrotik !== 'object' || Array.isArray(mikrotik)) {
+    throw new HttpError(400, 'mikrotik object is required.', { field: 'mikrotik' });
+  }
+
+  const { host, username, password, port } = mikrotik;
+  if (!host || typeof host !== 'string' || !host.trim()) {
+    throw new HttpError(400, 'mikrotik.host is required and must be a string.', { field: 'mikrotik.host' });
+  }
+  if (!username || typeof username !== 'string' || !username.trim()) {
+    throw new HttpError(400, 'mikrotik.username is required and must be a string.', { field: 'mikrotik.username' });
+  }
+  if (!password || typeof password !== 'string') {
+    throw new HttpError(400, 'mikrotik.password is required and must be a string.', { field: 'mikrotik.password' });
+  }
+  if (port !== undefined && (!Number.isInteger(port) || port < 1 || port > 65535)) {
+    throw new HttpError(400, 'mikrotik.port must be an integer between 1 and 65535.', { field: 'mikrotik.port' });
+  }
+
+  return {
+    host: host.trim(),
+    username: username.trim(),
+    password,
+    ...(port !== undefined ? { port } : {}),
+  };
+};
 
 const validateCreateDiagnostic = (req, _res, next) => {
-  const { target, ports, expectsSipService, mikrotik } = req.body || {};
+  const { target, ports, expectsSipService, safeRangeScan, mikrotik } = req.body || {};
 
   if (!target || typeof target !== 'string' || !isValidTarget(target.trim())) {
-    return next(
-      new HttpError(400, 'Invalid target. Provide a valid IPv4 address, hostname, or localhost.', {
-        field: 'target',
-      })
-    );
+    return next(new HttpError(400, 'Invalid target. Provide a valid IPv4 address, hostname, or localhost.', { field: 'target' }));
   }
 
   if (ports !== undefined) {
     if (!Array.isArray(ports) || ports.length === 0) {
       return next(new HttpError(400, 'Ports must be a non-empty array when provided.', { field: 'ports' }));
     }
-
     const invalidPort = ports.find((port) => !Number.isInteger(port) || port < 1 || port > 65535);
     if (invalidPort !== undefined) {
       return next(new HttpError(400, 'Every port must be an integer between 1 and 65535.', { field: 'ports' }));
     }
   }
 
-
   if (mikrotik !== undefined) {
-    if (typeof mikrotik !== 'object' || mikrotik === null || Array.isArray(mikrotik)) {
-      return next(new HttpError(400, 'mikrotik must be an object when provided.', { field: 'mikrotik' }));
-    }
-
-    const { host, username, password, port, privateKeyPath } = mikrotik;
-
-    if (!host || typeof host !== 'string') {
-      return next(new HttpError(400, 'mikrotik.host is required and must be a string.', { field: 'mikrotik.host' }));
-    }
-
-    if (!username || typeof username !== 'string') {
-      return next(new HttpError(400, 'mikrotik.username is required and must be a string.', { field: 'mikrotik.username' }));
-    }
-
-    if (password !== undefined && typeof password !== 'string') {
-      return next(new HttpError(400, 'mikrotik.password must be a string when provided.', { field: 'mikrotik.password' }));
-    }
-
-    if (port !== undefined && (!Number.isInteger(port) || port < 1 || port > 65535)) {
-      return next(new HttpError(400, 'mikrotik.port must be an integer between 1 and 65535.', { field: 'mikrotik.port' }));
-    }
-
-    if (privateKeyPath !== undefined && typeof privateKeyPath !== 'string') {
-      return next(new HttpError(400, 'mikrotik.privateKeyPath must be a string when provided.', { field: 'mikrotik.privateKeyPath' }));
-    }
-
-    if (!password && !privateKeyPath) {
-      return next(
-        new HttpError(400, 'Provide mikrotik.password or mikrotik.privateKeyPath for authentication.', {
-          field: 'mikrotik.password',
-        })
-      );
+    try {
+      validateMikrotikCredentials(mikrotik);
+    } catch (error) {
+      return next(error);
     }
   }
 
@@ -68,10 +69,168 @@ const validateCreateDiagnostic = (req, _res, next) => {
     return next(new HttpError(400, 'expectsSipService must be a boolean when provided.', { field: 'expectsSipService' }));
   }
 
+  if (safeRangeScan !== undefined && typeof safeRangeScan !== 'boolean') {
+    return next(new HttpError(400, 'safeRangeScan must be a boolean when provided.', { field: 'safeRangeScan' }));
+  }
+
   req.body.target = target.trim();
   next();
 };
 
+const validatePortForwardingRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, config } = req.body || {};
+    if (!config || typeof config !== 'object' || Array.isArray(config)) {
+      throw new HttpError(400, 'config object is required.', { field: 'config' });
+    }
+
+    const sanitizedMikrotik = validateMikrotikCredentials(mikrotik);
+    const { publicIp, externalPort, internalIp, internalPort, protocol } = config;
+
+    if (publicIp !== undefined && publicIp !== '' && (typeof publicIp !== 'string' || !ipv4Regex.test(publicIp.trim()))) {
+      throw new HttpError(400, 'config.publicIp must be a valid IPv4 address when provided.', { field: 'config.publicIp' });
+    }
+
+    if (typeof internalIp !== 'string' || !ipv4Regex.test(internalIp.trim())) {
+      throw new HttpError(400, 'config.internalIp is required and must be a valid IPv4 address.', { field: 'config.internalIp' });
+    }
+
+    validatePortValue(externalPort, 'config.externalPort');
+    validatePortValue(internalPort, 'config.internalPort');
+
+    if (!['tcp', 'udp'].includes(String(protocol || '').toLowerCase())) {
+      throw new HttpError(400, 'config.protocol must be either tcp or udp.', { field: 'config.protocol' });
+    }
+
+    req.body = {
+      ...req.body,
+      mikrotik: sanitizedMikrotik,
+      config: {
+        publicIp: publicIp ? publicIp.trim() : '',
+        externalPort,
+        internalIp: internalIp.trim(),
+        internalPort,
+        protocol: String(protocol).toLowerCase(),
+      },
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const validateStaticIpRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, config } = req.body || {};
+    if (!config || typeof config !== 'object' || Array.isArray(config)) {
+      throw new HttpError(400, 'config object is required.', { field: 'config' });
+    }
+
+    const sanitizedMikrotik = validateMikrotikCredentials(mikrotik);
+    const { publicIp, outInterface } = config;
+
+    if (typeof publicIp !== 'string' || !ipv4Regex.test(publicIp.trim())) {
+      throw new HttpError(400, 'config.publicIp is required and must be a valid IPv4 address.', { field: 'config.publicIp' });
+    }
+    if (typeof outInterface !== 'string' || !outInterface.trim()) {
+      throw new HttpError(400, 'config.outInterface is required and must be a string.', { field: 'config.outInterface' });
+    }
+
+    req.body = {
+      ...req.body,
+      mikrotik: sanitizedMikrotik,
+      config: { publicIp: publicIp.trim(), outInterface: outInterface.trim() },
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const validateLanNetworkChangeRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, config } = req.body || {};
+    if (!config || typeof config !== 'object' || Array.isArray(config)) {
+      throw new HttpError(400, 'config object is required.', { field: 'config' });
+    }
+
+    const sanitizedMikrotik = validateMikrotikCredentials(mikrotik);
+    const {
+      oldNetwork,
+      oldGateway,
+      newNetwork,
+      newGateway,
+      interface: interfaceName,
+      dhcpPoolStart,
+      dhcpPoolEnd,
+      dnsServer,
+      dhcpName,
+    } = config;
+
+    const requiredCidr = [
+      ['oldNetwork', oldNetwork],
+      ['oldGateway', oldGateway],
+      ['newNetwork', newNetwork],
+      ['newGateway', newGateway],
+    ];
+
+    requiredCidr.forEach(([field, value]) => {
+      if (typeof value !== 'string' || !cidrRegex.test(value.trim())) {
+        throw new HttpError(400, `config.${field} must be a valid CIDR (e.g. 192.168.1.0/24).`, { field: `config.${field}` });
+      }
+    });
+
+    if (typeof interfaceName !== 'string' || !interfaceName.trim()) {
+      throw new HttpError(400, 'config.interface is required and must be a string.', { field: 'config.interface' });
+    }
+
+    const ipFields = [
+      ['dhcpPoolStart', dhcpPoolStart],
+      ['dhcpPoolEnd', dhcpPoolEnd],
+      ['dnsServer', dnsServer],
+    ];
+
+    ipFields.forEach(([field, value]) => {
+      if (typeof value !== 'string' || !ipv4Regex.test(value.trim())) {
+        throw new HttpError(400, `config.${field} must be a valid IPv4 address.`, { field: `config.${field}` });
+      }
+    });
+
+    if (typeof dhcpName !== 'string' || !dhcpName.trim()) {
+      throw new HttpError(400, 'config.dhcpName is required and must be a string.', { field: 'config.dhcpName' });
+    }
+
+    if (ipToInt(dhcpPoolStart.trim()) > ipToInt(dhcpPoolEnd.trim())) {
+      throw new HttpError(400, 'config.dhcpPoolStart must be lower than or equal to config.dhcpPoolEnd.', { field: 'config.dhcpPoolStart' });
+    }
+
+    req.body = {
+      ...req.body,
+      mikrotik: sanitizedMikrotik,
+      config: {
+        oldNetwork: oldNetwork.trim(),
+        oldGateway: oldGateway.trim(),
+        newNetwork: newNetwork.trim(),
+        newGateway: newGateway.trim(),
+        interface: interfaceName.trim(),
+        dhcpPoolStart: dhcpPoolStart.trim(),
+        dhcpPoolEnd: dhcpPoolEnd.trim(),
+        dnsServer: dnsServer.trim(),
+        dhcpName: dhcpName.trim(),
+      },
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   validateCreateDiagnostic,
+  validatePortForwardingRequest,
+  validateStaticIpRequest,
+  validateLanNetworkChangeRequest,
 };

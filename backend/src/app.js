@@ -8,6 +8,7 @@ const env = require('./config/env');
 const logger = require('./config/logger');
 const diagnosticsRoutes = require('./routes/diagnostics.routes');
 const healthRoutes = require('./routes/health.routes');
+const mikrotikRoutes = require('./routes/mikrotik.routes');
 const { notFoundHandler, errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(
 
 app.use('/health', healthRoutes);
 app.use('/api/v1/diagnostics', diagnosticsRoutes);
+app.use('/api/v1/mikrotik', mikrotikRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
