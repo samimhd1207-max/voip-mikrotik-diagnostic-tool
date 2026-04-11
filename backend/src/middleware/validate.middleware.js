@@ -227,10 +227,90 @@ const validateLanNetworkChangeRequest = (req, _res, next) => {
     next(error);
   }
 };
+const validateWifiUpdateRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, config } = req.body || {};
+    if (!config || typeof config !== 'object' || Array.isArray(config)) {
+      throw new HttpError(400, 'config object is required.', { field: 'config' });
+    }
 
+    const sanitizedMikrotik = validateMikrotikCredentials(mikrotik);
+    const { ssid, wifiPassword } = config;
+
+    if (typeof ssid !== 'string' || !ssid.trim()) {
+      throw new HttpError(400, 'config.ssid is required and must be a non-empty string.', { field: 'config.ssid' });
+    }
+
+    if (typeof wifiPassword !== 'string' || wifiPassword.length < 8) {
+      throw new HttpError(400, 'config.wifiPassword must be at least 8 characters.', { field: 'config.wifiPassword' });
+    }
+
+    req.body = {
+      ...req.body,
+      mikrotik: sanitizedMikrotik,
+      config: {
+        ssid: ssid.trim(),
+        wifiPassword,
+      },
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+const validateRouteMail4gRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, config } = req.body || {};
+    if (!config || typeof config !== 'object' || Array.isArray(config)) {
+      throw new HttpError(400, 'config object is required.', { field: 'config' });
+    }
+
+    const sanitizedMikrotik = validateMikrotikCredentials(mikrotik);
+    const { deviceType, lanInterface, wan4gInterface, gateway4g } = config;
+
+    if (!['mr100', 'chateau'].includes(String(deviceType || '').toLowerCase())) {
+      throw new HttpError(400, 'config.deviceType must be either mr100 or chateau.', { field: 'config.deviceType' });
+    }
+
+    if (typeof lanInterface !== 'string' || !lanInterface.trim()) {
+      throw new HttpError(400, 'config.lanInterface is required and must be a string.', { field: 'config.lanInterface' });
+    }
+
+    if (typeof wan4gInterface !== 'string' || !wan4gInterface.trim()) {
+      throw new HttpError(400, 'config.wan4gInterface is required and must be a string.', { field: 'config.wan4gInterface' });
+    }
+
+    const normalizedDeviceType = String(deviceType).toLowerCase();
+    if (normalizedDeviceType === 'mr100') {
+      if (typeof gateway4g !== 'string' || !ipv4Regex.test(gateway4g.trim())) {
+        throw new HttpError(400, 'config.gateway4g is required for mr100 and must be a valid IPv4 address.', {
+          field: 'config.gateway4g',
+        });
+      }
+    }
+
+    req.body = {
+      ...req.body,
+      mikrotik: sanitizedMikrotik,
+      config: {
+        deviceType: normalizedDeviceType,
+        lanInterface: lanInterface.trim(),
+        wan4gInterface: wan4gInterface.trim(),
+        gateway4g: typeof gateway4g === 'string' ? gateway4g.trim() : '',
+      },
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
+  validateWifiUpdateRequest,
   validateCreateDiagnostic,
   validatePortForwardingRequest,
   validateStaticIpRequest,
   validateLanNetworkChangeRequest,
+  validateRouteMail4gRequest,
 };

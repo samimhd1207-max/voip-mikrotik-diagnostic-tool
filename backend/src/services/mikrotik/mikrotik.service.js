@@ -525,6 +525,143 @@ const fetchMikrotikSnapshot = async (connection) => {
     return payload;
   }
 };
+const escapeRouterOsString = (value = '') => value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+
+const buildWifiUpdateCommands = (config) => {
+  const ssid = escapeRouterOsString(config.ssid);
+  const wifiPassword = escapeRouterOsString(config.wifiPassword);
+
+  return {
+    wlan1: `/interface wireless set [find default-name=wlan1] ssid="${ssid}" security-profile=default wps-mode=disabled`,
+    wlan2: `/interface wireless set [find default-name=wlan2] ssid="${ssid}" security-profile=default wps-mode=disabled`,
+    security: `/interface wireless security-profiles set [find name="default"] mode=dynamic-keys authentication-types=wpa2-psk unicast-ciphers=aes-ccm group-ciphers=aes-ccm wpa2-pre-shared-key="${wifiPassword}"`,
+  };
+};
+
+const applyWifiConfiguration = async ({ mikrotik, config }) => {
+  const commands = buildWifiUpdateCommands(config);
+  const context = {
+    host: mikrotik.host,
+    username: mikrotik.username,
+    ssid: config.ssid,
+  };
+
+  try {
+    logger.info(context, 'Applying MikroTik WiFi settings (SSID + WPA2 profile)');
+    await runSshCommand(mikrotik, commands.wlan1);
+    await runSshCommand(mikrotik, commands.wlan2);
+    await runSshCommand(mikrotik, commands.security);
+    logger.info(context, 'MikroTik WiFi settings updated successfully');
+    return { success: true, commands };
+  } catch (error) {
+    logger.error({ ...context, error: error.message }, 'Failed to update MikroTik WiFi settings');
+
+    if (looksLikeAuthFailure(error.message)) {
+      throw new HttpError(401, 'MikroTik authentication failed. Please check username/password and retry.', {
+        field: 'mikrotik.password',
+      });
+    }
+
+    throw new HttpError(400, `MikroTik WiFi update failed: ${error.message}`, {
+      field: 'mikrotik.host',
+    });
+  }
+};
+const MAIL_PORTS = '25,110,143,465,587,993,995';
+
+const buildRouteMail4gCommands = (config) => {
+  if (config.deviceType === 'mr100') {
+    return {
+      mode: 'mr100',
+      routingTable: '/routing table add name=mail_via_4g fib',
+      route: `/ip route add dst-address=0.0.0.0/0 gateway=${config.gateway4g}@main routing-table=mail_via_4g comment="Route mail via MR100 4G"`,
+      mangleConnection: `/ip firewall mangle add chain=prerouting in-interface=${config.lanInterface} protocol=tcp dst-port=${MAIL_PORTS} dst-address-type=!local connection-state=new action=mark-connection new-connection-mark=mail_4g_conn passthrough=yes comment="Mark mail connections to 4G"`,
+      mangleRouting: `/ip firewall mangle add chain=prerouting in-interface=${config.lanInterface} connection-mark=mail_4g_conn action=mark-routing new-routing-mark=mail_via_4g passthrough=no comment="Route marked mail via 4G"`,
+      filter: '/ip firewall filter add chain=forward connection-mark=mail_4g_conn action=accept place-before=[find where action=fasttrack-connection] comment="Bypass FastTrack for mail via 4G"',
+      nat: `/ip firewall nat add chain=srcnat out-interface=${config.wan4gInterface} action=masquerade comment="NAT mail via 4G"`,
+    };
+  }
+
+  return {
+    mode: 'chateau',
+    routingTable: '/routing table add name=mail_via_lte fib',
+    route: '/ip route add dst-address=0.0.0.0/0 gateway=lte1 routing-table=mail_via_lte comment="Mail via LTE Chateau"',
+    mangleConnection: `/ip firewall mangle add chain=prerouting in-interface=${config.lanInterface} protocol=tcp dst-port=${MAIL_PORTS} dst-address-type=!local connection-state=new action=mark-connection new-connection-mark=mail_lte_conn passthrough=yes comment="Mark mail connections to LTE"`,
+    mangleRouting: `/ip firewall mangle add chain=prerouting in-interface=${config.lanInterface} connection-mark=mail_lte_conn action=mark-routing new-routing-mark=mail_via_lte passthrough=no comment="Route marked mail via LTE"`,
+    filter: '/ip firewall filter add chain=forward connection-mark=mail_lte_conn action=accept place-before=[find where action=fasttrack-connection] comment="Bypass FastTrack for mail via LTE"',
+    nat: '/ip firewall nat add chain=srcnat out-interface=lte1 action=masquerade comment="NAT via LTE"',
+  };
+};
+
+const hasPattern = (raw = '', pattern) => new RegExp(pattern, 'i').test(raw);
+
+const applyMailRoutingVia4g = async ({ mikrotik, config }) => {
+  const commandSet = buildRouteMail4gCommands(config);
+  const context = {
+    host: mikrotik.host,
+    username: mikrotik.username,
+    mode: commandSet.mode,
+    lanInterface: config.lanInterface,
+    wan4gInterface: config.wan4gInterface,
+  };
+
+  try {
+    logger.info(context, 'Checking existing MikroTik rules for mail routing via 4G/LTE');
+
+    const routingTableRaw = await runSshCommand(mikrotik, '/routing table print terse without-paging');
+    const routeRaw = await runSshCommand(mikrotik, '/ip route print terse without-paging');
+    const mangleRaw = await runSshCommand(mikrotik, '/ip firewall mangle print terse without-paging');
+    const filterRaw = await runSshCommand(mikrotik, '/ip firewall filter print terse without-paging');
+    const natRaw = await runSshCommand(mikrotik, '/ip firewall nat print terse without-paging');
+
+    const tableName = commandSet.mode === 'mr100' ? 'mail_via_4g' : 'mail_via_lte';
+    const connectionMark = commandSet.mode === 'mr100' ? 'mail_4g_conn' : 'mail_lte_conn';
+    const natComment = commandSet.mode === 'mr100' ? 'NAT mail via 4G' : 'NAT via LTE';
+
+    const skipped = {
+      routingTable: hasPattern(routingTableRaw, `\\bname=${tableName}\\b`),
+      route: hasPattern(routeRaw, `\\brouting-table=${tableName}\\b`) && hasPattern(routeRaw, '\\bdst-address=0\\.0\\.0\\.0/0\\b'),
+      mangleConnection: hasPattern(mangleRaw, `\\bnew-connection-mark=${connectionMark}\\b`) && hasPattern(mangleRaw, `\\bdst-port=${MAIL_PORTS}\\b`),
+      mangleRouting: hasPattern(mangleRaw, `\\bconnection-mark=${connectionMark}\\b`) && hasPattern(mangleRaw, `\\bnew-routing-mark=${tableName}\\b`),
+      filter: hasPattern(filterRaw, `\\bconnection-mark=${connectionMark}\\b`) && hasPattern(filterRaw, '\\bchain=forward\\b'),
+      nat: hasPattern(natRaw, `\\bcomment="${natComment}"\\b`) || (hasPattern(natRaw, '\\bchain=srcnat\\b') && hasPattern(natRaw, `\\bout-interface=${config.wan4gInterface}\\b`)),
+    };
+
+    if (!skipped.routingTable) await runSshCommand(mikrotik, commandSet.routingTable);
+    if (!skipped.route) await runSshCommand(mikrotik, commandSet.route);
+    if (!skipped.mangleConnection) await runSshCommand(mikrotik, commandSet.mangleConnection);
+    if (!skipped.mangleRouting) await runSshCommand(mikrotik, commandSet.mangleRouting);
+    if (!skipped.filter) await runSshCommand(mikrotik, commandSet.filter);
+    if (!skipped.nat) await runSshCommand(mikrotik, commandSet.nat);
+
+    logger.info(context, 'MikroTik mail routing via 4G/LTE updated successfully');
+    return {
+      success: true,
+      mode: commandSet.mode,
+      commands: [
+        commandSet.routingTable,
+        commandSet.route,
+        commandSet.mangleConnection,
+        commandSet.mangleRouting,
+        commandSet.filter,
+        commandSet.nat,
+      ],
+      skipped,
+    };
+  } catch (error) {
+    logger.error({ ...context, error: error.message }, 'Failed to configure MikroTik mail routing via 4G/LTE');
+
+    if (looksLikeAuthFailure(error.message)) {
+      throw new HttpError(401, 'MikroTik authentication failed. Please check username/password and retry.', {
+        field: 'mikrotik.password',
+      });
+    }
+
+    throw new HttpError(400, `MikroTik mail 4G routing failed: ${error.message}`, {
+      field: 'mikrotik.host',
+    });
+  }
+};
 
 module.exports = {
   fetchMikrotikSnapshot,
@@ -534,4 +671,8 @@ module.exports = {
   applyStaticPublicIp,
   buildLanNetworkCommands,
   applyLanNetworkChange,
+  buildWifiUpdateCommands,
+applyWifiConfiguration,
+buildRouteMail4gCommands,
+applyMailRoutingVia4g,
 };
