@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../../styles/Navbar.css';
 
 const BellIcon = () => (
@@ -27,50 +27,87 @@ const SearchIcon = () => (
 
 function Navbar() {
   const [search, setSearch] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const hideTimerRef = useRef(null);
+
+  const clearHideTimer = () => {
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
+    }
+  };
+
+  const showNavbar = () => {
+    clearHideTimer();
+    setIsVisible(true);
+  };
+
+  const hideNavbarWithDelay = () => {
+    clearHideTimer();
+    hideTimerRef.current = setTimeout(() => {
+      setIsVisible(false);
+      hideTimerRef.current = null;
+    }, 140);
+  };
+
+  useEffect(() => () => clearHideTimer(), []);
 
   return (
-    <header className="navbar" role="banner">
-      <div className="navbar__aurora" aria-hidden="true" />
+    <div className="navbar-shell" aria-hidden={false}>
+      <div
+        className="navbar-hover-zone"
+        onMouseEnter={showNavbar}
+        aria-hidden="true"
+      />
 
-      <div className="navbar__left">
-        <div className="navbar__logo-mark" aria-hidden="true">N</div>
-        <div>
-          <p className="navbar__logo">NETCOM GROUPE</p>
-          {/* <p className="navbar__tagline">MikroTik Operations Center</p> */}
+      <header
+        className={`navbar ${isVisible ? 'visible' : 'hidden'}`}
+        role="banner"
+        onMouseEnter={showNavbar}
+        onMouseLeave={hideNavbarWithDelay}
+      >
+        <div className="navbar__aurora" aria-hidden="true" />
+
+        <div className="navbar__left">
+          <div className="navbar__logo-mark" aria-hidden="true">N</div>
+          <div>
+            <p className="navbar__logo">NETCOM GROUPE</p>
+            <p className="navbar__tagline">MikroTik Operations Center</p>
+          </div>
         </div>
-      </div>
 
-      <div className="navbar__center">
-        <label className="navbar__search-wrapper" htmlFor="global-search">
-          <span className="navbar__search-icon"><SearchIcon /></span>
-          <input
-            id="global-search"
-            className="navbar__search-input"
-            type="search"
-            placeholder="Search ticket, IP, client..."
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            aria-label="Search"
-          />
-          <kbd className="navbar__shortcut">⌘K</kbd>
-        </label>
-      </div>
+        <div className="navbar__center">
+          <label className="navbar__search-wrapper" htmlFor="global-search">
+            <span className="navbar__search-icon"><SearchIcon /></span>
+            <input
+              id="global-search"
+              className="navbar__search-input"
+              type="search"
+              placeholder="Search ticket, IP, client..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              aria-label="Search"
+            />
+            <kbd className="navbar__shortcut">⌘K</kbd>
+          </label>
+        </div>
 
-      <nav className="navbar__right" aria-label="Quick actions">
-        <button className="navbar__icon-btn" type="button" aria-label="Notifications">
-          <BellIcon />
-          <span className="navbar__dot" aria-hidden="true" />
-        </button>
+        <nav className="navbar__right" aria-label="Quick actions">
+          <button className="navbar__icon-btn" type="button" aria-label="Notifications">
+            <BellIcon />
+            <span className="navbar__dot" aria-hidden="true" />
+          </button>
 
-        <button className="navbar__icon-btn" type="button" aria-label="Profile">
-          <UserIcon />
-        </button>
+          <button className="navbar__icon-btn" type="button" aria-label="Profile">
+            <UserIcon />
+          </button>
 
-        <button className="navbar__icon-btn" type="button" aria-label="Menu">
-          <MenuIcon />
-        </button>
-      </nav>
-    </header>
+          <button className="navbar__icon-btn" type="button" aria-label="Menu">
+            <MenuIcon />
+          </button>
+        </nav>
+      </header>
+    </div>
   );
 }
 
