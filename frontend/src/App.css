@@ -551,3 +551,120 @@ code {
     width: 100%;
   }
 }
+.dashboard-header-actions {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.dashboard-link-btn {
+  width: 210px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  box-shadow: 0 10px 20px #312e8142;
+  text-decoration: none;
+  text-align: center;
+  transition: filter 120ms ease;
+}
+
+.dashboard-link-btn:hover {
+  filter: brightness(1.06);
+}
+
+.audit-credentials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.audit-feedback {
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.audit-feedback-success {
+  color: #4ade80;
+}
+
+.audit-feedback-error {
+  color: #f87171;
+}
+
+.audit-loading {
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+.audit-issues {
+  display: grid;
+  gap: 1rem;
+}
+
+.audit-issue-card {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(10, 25, 53, 0.38);
+}
+
+.audit-issue-card pre {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  padding: 0.65rem;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.audit-problem {
+  color: #fca5a5;
+}
+
+.audit-solution {
+  color: #86efac;
+}
+
+.audit-command {
+  color: #cbd5e1;
+}
+
+@media (max-width: 900px) {
+  .audit-credentials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.severity-badge {
+  display: inline-flex;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+}
+
+.severity-critical {
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.4);
+  border: 1px solid rgba(248, 113, 113, 0.6);
+}
+
+.severity-warning {
+  color: #fed7aa;
+  background: rgba(154, 52, 18, 0.35);
+  border: 1px solid rgba(251, 146, 60, 0.6);
+}
+
+.severity-info {
+  color: #bfdbfe;
+  background: rgba(30, 64, 175, 0.35);
+  border: 1px solid rgba(96, 165, 250, 0.6);
+}

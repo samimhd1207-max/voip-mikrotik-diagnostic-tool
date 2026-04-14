@@ -306,7 +306,39 @@ const validateRouteMail4gRequest = (req, _res, next) => {
     next(error);
   }
 };
+const validateMikrotikAuditRequest = (req, _res, next) => {
+  try {
+    const { mikrotik } = req.body || {};
+    req.body = {
+      ...req.body,
+      mikrotik: validateMikrotikCredentials(mikrotik),
+    };
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const validateMikrotikApplyFixRequest = (req, _res, next) => {
+  try {
+    const { mikrotik, command } = req.body || {};
+    if (typeof command !== 'string' || !command.trim()) {
+      throw new HttpError(400, 'command is required and must be a string.', { field: 'command' });
+    }
+
+    req.body = {
+      ...req.body,
+      command: command.trim(),
+      mikrotik: validateMikrotikCredentials(mikrotik),
+    };
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
+  validateMikrotikAuditRequest,
+  validateMikrotikApplyFixRequest,
   validateWifiUpdateRequest,
   validateCreateDiagnostic,
   validatePortForwardingRequest,

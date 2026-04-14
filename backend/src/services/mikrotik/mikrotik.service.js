@@ -662,8 +662,292 @@ const applyMailRoutingVia4g = async ({ mikrotik, config }) => {
     });
   }
 };
+const ALLOWED_AUDIT_SCRIPTS = ['audit_nat', 'audit_pppoe', 'audit_nat_filter'];
+const SAFE_COMMAND_PREFIXES = ['/ip firewall', '/interface pppoe-client', '/ip address'];
+const BLOCKED_COMMAND_PATTERNS = [/^\/system\s+reset/i, /^\/file\s+remove/i];
+
+const parseMikrotikOutput = (rawOutput = '') => {
+  const issues = [];
+  let currentIssue = null;
+
+  rawOutput
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .forEach((line) => {
+      if (line.startsWith('ALERTE:')) {
+        currentIssue = {
+          problem: line.replace(/^ALERTE:\s*/i, '').trim(),
+          solution: '',
+          command: '',
+        };
+        issues.push(currentIssue);
+        return;
+      }
+
+      if (!currentIssue) return;
+
+      if (line.startsWith('SOLUTION:')) {
+        currentIssue.solution = line.replace(/^SOLUTION:\s*/i, '').trim();
+        return;
+      }
+
+      if (line.startsWith('COMMAND:')) {
+        currentIssue.command = line.replace(/^COMMAND:\s*/i, '').trim();
+      }
+    });
+
+  return issues;
+};
+
+const assertSafeCommand = (command = '') => {
+  const normalized = String(command || '').trim();
+
+  if (!normalized) {
+    throw new HttpError(400, 'command is required.', { field: 'command' });
+  }
+
+  if (BLOCKED_COMMAND_PATTERNS.some((pattern) => pattern.test(normalized))) {
+    throw new HttpError(403, 'Command blocked by security policy.', { field: 'command' });
+  }
+
+  const allowed = SAFE_COMMAND_PREFIXES.some((prefix) => normalized.startsWith(prefix));
+  if (!allowed) {
+    throw new HttpError(403, 'Command is not in allowed MikroTik command scope.', { field: 'command' });
+  }
+
+  return normalized;
+};
+
+const runMikrotikScript = async (scriptName, connection) => {
+  const normalizedScript = String(scriptName || '').trim();
+  if (!ALLOWED_AUDIT_SCRIPTS.includes(normalizedScript)) {
+    throw new HttpError(400, `Unsupported audit script: ${normalizedScript || 'empty'}.`, {
+      field: 'scriptName',
+    });
+  }
+
+  logger.info({ host: connection.host, script: normalizedScript }, 'Running MikroTik audit script');
+  const output = await runSshCommand(connection, `/system script run ${normalizedScript}`);
+  return output;
+};
+
+const runAllAudits = async (connection) => {
+  const outputs = [];
+
+  for (const scriptName of ALLOWED_AUDIT_SCRIPTS) {
+    const output = await runMikrotikScript(scriptName, connection);
+    outputs.push(output);
+  }
+
+  return outputs.join('\n');
+};
+
+const executeMikrotikCommand = async (command, connection) => {
+  const safeCommand = assertSafeCommand(command);
+  logger.info({ host: connection.host, command: safeCommand }, 'Executing MikroTik fix command');
+  const output = await runSshCommand(connection, safeCommand);
+  return {
+    success: true,
+    command: safeCommand,
+    output,
+  };
+};
+const runCoreNetworkAudit = async (connection) => {
+  const [
+    ipAddressRaw,
+    routeRaw,
+    natRaw,
+    filterRaw,
+    dhcpServerRaw,
+    dnsRaw,
+    interfaceRaw,
+    pppoeClientRaw,
+    dhcpClientRaw,
+    dhcpNetworkRaw,
+  ] = await Promise.all([
+    runSshCommand(connection, '/ip address print terse without-paging'),
+    runSshCommand(connection, '/ip route print terse without-paging'),
+    runSshCommand(connection, '/ip firewall nat print terse without-paging'),
+    runSshCommand(connection, '/ip firewall filter print terse without-paging'),
+    runSshCommand(connection, '/ip dhcp-server print terse without-paging'),
+    runSshCommand(connection, '/ip dns print without-paging'),
+    runSshCommand(connection, '/interface print terse without-paging'),
+    runSshCommand(connection, '/interface pppoe-client print terse without-paging'),
+    runSshCommand(connection, '/ip dhcp-client print terse without-paging'),
+    runSshCommand(connection, '/ip dhcp-server network print terse without-paging'),
+  ]);
+
+  const natRecords = parseRecords(natRaw);
+  const filterRecords = parseRecords(filterRaw);
+  const routeRecords = parseRecords(routeRaw);
+  const pppoeRecords = parseRecords(pppoeClientRaw);
+  const dhcpClientRecords = parseRecords(dhcpClientRaw);
+  const dhcpServerRecords = parseRecords(dhcpServerRaw);
+  const ipAddressRecords = parseRecords(ipAddressRaw);
+  const dhcpNetworkRecords = parseRecords(dhcpNetworkRaw);
+
+  const issues = [];
+
+  // 1) NAT masquerade check
+  const hasMasquerade = natRecords.some((item) => item.chain === 'srcnat' && item.action === 'masquerade');
+  if (!hasMasquerade) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'No NAT masquerade rule detected',
+        impact: 'LAN clients may not have internet access.',
+        solution: 'Add a masquerade rule for internet access.',
+        command: '/ip firewall nat add chain=srcnat action=masquerade out-interface=<wan-interface>',
+        severity: 'critical',
+      })
+    );
+  }
+
+  // 2) dstnat vs firewall forward allow check
+  const dstNatRules = natRecords.filter((item) => item.chain === 'dstnat' && item['dst-port'] && item.protocol);
+  dstNatRules.forEach((rule) => {
+    const hasForwardAllow = filterRecords.some(
+      (filterItem) =>
+        filterItem.chain === 'forward' &&
+        filterItem.action === 'accept' &&
+        (filterItem.protocol || '').toLowerCase() === (rule.protocol || '').toLowerCase() &&
+        filterItem['dst-port'] === rule['dst-port']
+    );
+
+    if (!hasForwardAllow) {
+      issues.push(
+        buildAuditIssue({
+          problem: `Port ${rule['dst-port']} is forwarded but blocked by firewall`,
+          impact: 'Published service may be unreachable from internet.',
+          solution: 'Allow this port in firewall.',
+          command: `/ip firewall filter add chain=forward protocol=${rule.protocol} dst-port=${rule['dst-port']} action=accept`,
+          severity: 'warning',
+        })
+      );
+    }
+  });
+
+  // 3) Default route checks
+  const defaultRoutes = routeRecords.filter((route) => route['dst-address'] === '0.0.0.0/0');
+  if (defaultRoutes.length === 0) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'No default route configured',
+        impact: 'Router cannot route traffic to the internet.',
+        solution: 'Add a default route to access internet.',
+        command: '/ip route add dst-address=0.0.0.0/0 gateway=<gateway-ip>',
+        severity: 'critical',
+      })
+    );
+  }
+
+  if (defaultRoutes.length > 1) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'Multiple default routes detected',
+        impact: 'Can cause unstable outbound routing if distances are misconfigured.',
+        solution: 'Check route distances and failover configuration.',
+        command: '/ip route print',
+        severity: 'warning',
+      })
+    );
+  }
+
+  // 4) WAN checks (PPPoE / DHCP client)
+  const hasPppoeOrDhcpClient = pppoeRecords.length > 0 || dhcpClientRecords.length > 0;
+  const hasRunningWan = [...pppoeRecords, ...dhcpClientRecords].some(
+    (item) => item.running === 'yes' || item.status === 'bound'
+  );
+
+  if (!hasPppoeOrDhcpClient) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'WAN interface not active',
+        impact: 'No upstream WAN client detected (PPPoE/DHCP).',
+        solution: 'Check PPPoE or DHCP client configuration.',
+        command: '/interface pppoe-client print',
+        severity: 'critical',
+      })
+    );
+  } else if (!hasRunningWan) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'WAN interface not active',
+        impact: 'WAN client exists but is not running/bound.',
+        solution: 'Check PPPoE or DHCP client configuration.',
+        command: '/interface pppoe-client print',
+        severity: 'warning',
+      })
+    );
+  }
+
+  // 5) DNS check
+  const dnsServersMatch = dnsRaw.match(/servers:\s*([^\n]+)/i);
+  const hasDnsServers = dnsServersMatch && dnsServersMatch[1].trim() && dnsServersMatch[1].trim() !== '';
+  if (!hasDnsServers) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'No DNS server configured',
+        impact: 'Hostnames cannot be resolved by router/clients.',
+        solution: 'Configure DNS servers.',
+        command: '/ip dns set servers=8.8.8.8,1.1.1.1 allow-remote-requests=yes',
+        severity: 'warning',
+      })
+    );
+  }
+
+  // 6) DHCP server check
+  const hasDisabledDhcp = dhcpServerRecords.some((item) => item.disabled === 'yes' || /^X/.test(item.raw));
+  if (hasDisabledDhcp) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'DHCP server is disabled',
+        impact: 'LAN clients may fail to obtain IP configuration automatically.',
+        solution: 'Enable DHCP server.',
+        command: '/ip dhcp-server enable [find]',
+        severity: 'warning',
+      })
+    );
+  }
+
+  // 7) IP addressing check (LAN vs DHCP network)
+  const dhcpNetworkAddresses = dhcpNetworkRecords
+    .map((item) => item.address || '')
+    .filter(Boolean)
+    .map((value) => value.split('/')[0].split('.').slice(0, 3).join('.'));
+
+  const lanPrefixes = ipAddressRecords
+    .map((item) => item.address || '')
+    .filter(Boolean)
+    .map((value) => value.split('/')[0].split('.').slice(0, 3).join('.'));
+
+  const hasNetworkMismatch =
+    dhcpNetworkAddresses.length > 0 &&
+    lanPrefixes.length > 0 &&
+    !dhcpNetworkAddresses.some((networkPrefix) => lanPrefixes.includes(networkPrefix));
+
+  if (hasNetworkMismatch) {
+    issues.push(
+      buildAuditIssue({
+        problem: 'LAN IP does not match DHCP network',
+        impact: 'Clients may receive IP settings that do not match LAN gateway subnet.',
+        solution: 'Align IP address with DHCP network.',
+        command: '/ip address print',
+        severity: 'warning',
+      })
+    );
+  }
+
+  logger.info({ host: connection.host, issueCount: issues.length }, 'Core network MikroTik audit completed');
+  return issues;
+};
 
 module.exports = {
+  runCoreNetworkAudit,
+  runMikrotikScript,
+runAllAudits,
+parseMikrotikOutput,
+executeMikrotikCommand,
   fetchMikrotikSnapshot,
   buildPortForwardCommands,
   applyPortForwarding,

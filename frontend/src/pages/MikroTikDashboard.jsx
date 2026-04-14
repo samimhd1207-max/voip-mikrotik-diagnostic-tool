@@ -50,15 +50,24 @@ function MikroTikDashboard() {
             <h1>MikroTik Dashboard</h1>
             <p className="help-text">Connected to {credentials.host}:{credentials.port || 22} as {credentials.username}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              sessionStorage.removeItem('mikrotikCredentials');
-              navigate('/');
-            }}
-          >
-            Disconnect
-          </button>
+          <div className="dashboard-header-actions">
+            <button
+              className="dashboard-link-btn"
+              type="button"
+              onClick={() => navigate('/mikrotik/audit', { state: { credentials } })}
+            >
+              Open Audit
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                sessionStorage.removeItem('mikrotikCredentials');
+                navigate('/');
+              }}
+            >
+              Disconnect
+            </button>
+          </div>
         </div>
 
         <div className="dashboard-grid">

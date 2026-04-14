@@ -4,6 +4,9 @@ const {
   applyLanNetworkChange,
   applyWifiConfiguration,
   applyMailRoutingVia4g,
+  runAllAudits,
+  parseMikrotikOutput,
+  executeMikrotikCommand,
 } = require('../services/mikrotik/mikrotik.service');
 
 const applyMikrotikPortForward = async (req, res, next) => {
@@ -80,10 +83,36 @@ const applyMikrotikMailRoute4g = async (req, res, next) => {
   }
 };
 
+const applyMikrotikFix = async (req, res, next) => {
+  try {
+    const { mikrotik, command } = req.body;
+    const result = await executeMikrotikCommand(command, mikrotik);
+
+    res.status(200).json({
+      success: true,
+      result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const runMikrotikAudit = async (req, res, next) => {
+  try {
+    const { mikrotik } = req.body;
+    const issues = await runCoreNetworkAudit(mikrotik);
+
+    res.status(200).json(issues);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   applyMikrotikPortForward,
   applyMikrotikStaticIp,
   applyMikrotikLanNetworkChange,
   applyMikrotikWifiConfiguration,
   applyMikrotikMailRoute4g,
+  runMikrotikAudit,
+  applyMikrotikFix,
 };
